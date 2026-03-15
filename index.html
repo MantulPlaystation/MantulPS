@@ -178,6 +178,34 @@ padding:12px;
 
 }
 
+.hapusRiwayat{
+background:#dc2626;
+color:white;
+padding:8px 14px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+margin-bottom:10px;
+}
+
+.hapusRiwayat:hover{
+background:#b91c1c;
+}
+
+.resetPendapatan{
+background:#f59e0b;
+color:white;
+padding:8px 12px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+margin-top:8px;
+}
+
+.resetPendapatan:hover{
+background:#d97706;
+}
+
 }
 
 </style>
@@ -193,6 +221,11 @@ padding:12px;
 <div class="card">
 Total Pendapatan
 <h2 id="totalPend">0</h2>
+
+<button onclick="resetPendapatan()" class="resetPendapatan">
+Reset Pendapatan
+</button>
+
 </div>
 
 <div class="card">
@@ -207,6 +240,9 @@ Hari Ini
 <div style="padding:15px">
 
 <h3>Riwayat Transaksi</h3>
+<button onclick="hapusRiwayat()" class="hapusRiwayat">
+Hapus Riwayat
+</button>
 
 <table>
 
@@ -388,6 +424,38 @@ TOTAL : ${total}
 `)
 
 w.print()
+
+}
+
+function hapusRiwayat(){
+
+if(confirm("Apakah yakin ingin menghapus semua riwayat transaksi?")){
+
+transaksi = []
+
+localStorage.removeItem("trans")
+
+renderHistory()
+
+alert("Riwayat transaksi berhasil dihapus")
+
+}
+
+}
+
+function resetPendapatan(){
+
+if(confirm("Yakin ingin mereset total pendapatan?")){
+
+pendapatan = 0
+
+localStorage.setItem("pend", pendapatan)
+
+document.getElementById("totalPend").innerText = pendapatan
+
+alert("Total pendapatan berhasil direset")
+
+}
 
 }
 
