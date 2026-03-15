@@ -1,17 +1,12 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="Rental PS">
-<meta name="theme-color" content="#ef4444">
+
 <title>Billing Rental MANTUL PS</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="apple-touch-icon" href="icon.png">
 
 <style>
 
@@ -46,16 +41,81 @@ min-width:150px;
 
 .container{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:15px;
 padding:15px;
 }
 
 .pscard{
-background:#1e293b;
 padding:15px;
 border-radius:12px;
+transition:background 0.4s ease;
 }
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(15px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+.pscard{
+transition:background 0.5s ease, transform 0.2s;
+}
+
+.pscard:hover{
+
+transform:scale(1.02);
+
+}
+
+button{
+border:none;
+padding:6px 10px;
+border-radius:6px;
+cursor:pointer;
+transition:all 0.15s ease;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+button:active{
+transform:scale(0.92);
+}
+
+.timerWarning{
+animation:blink 1s infinite;
+}
+
+@keyframes blink{
+
+0%{opacity:1}
+50%{opacity:0.4}
+100%{opacity:1}
+
+}
+
+@keyframes blink{
+
+0%{opacity:1}
+50%{opacity:0.4}
+100%{opacity:1}
+
+}
+
+.kosong{background:#16a34a}
+.main{background:#2563eb}
+.hampir{background:#f59e0b}
+.habis{background:#dc2626}
 
 .timer{
 font-size:28px;
@@ -71,27 +131,51 @@ cursor:pointer;
 
 .start{background:#22c55e}
 .pause{background:#f59e0b}
+.reset{background:#ef4444}
 .bayar{background:#3b82f6}
 
-.menu{
-display:flex;
-flex-direction:column;
-gap:5px;
+.menuGrid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:6px;
 margin-top:10px;
 }
 
-.menuItem{
-display:flex;
-justify-content:space-between;
-align-items:center;
+.snackBtn{
 background:#334155;
-padding:5px;
-border-radius:5px;
+padding:6px;
+border-radius:6px;
+display:flex;
+flex-direction:column;
+align-items:center;
+font-size:12px;
+transition:0.2s;
 }
 
-.qty{
+.snackBtn:hover{
+background:#475569;
+transform:scale(1.05);
+}
+
+.qtyBox{
 display:flex;
 gap:5px;
+margin-top:4px;
+}
+
+.qtyBox button{
+background:#64748b;
+padding:2px 6px;
+}
+
+.reset{
+background:#ef4444;
+color:white;
+}
+
+.tambah{
+background:#22c55e;
+color:white;
 }
 
 table{
@@ -106,110 +190,7 @@ border-bottom:1px solid #334155;
 text-align:center;
 }
 
-.reset{
-background:#ef4444;
-color:white;
-}
-
-/* MOBILE RESPONSIVE */
-
-@media (max-width:768px){
-
-header{
-font-size:18px;
-padding:12px;
-}
-
-.dashboard{
-flex-direction:column;
-}
-
-.card{
-width:100%;
-}
-
-.container{
-grid-template-columns:1fr;
-padding:10px;
-}
-
-.pscard{
-padding:12px;
-}
-
-.timer{
-font-size:24px;
-}
-
-button{
-padding:10px;
-font-size:14px;
-}
-
-.menuItem{
-flex-direction:row;
-}
-
-.qty button{
-padding:6px 10px;
-font-size:14px;
-}
-
-input,select{
-font-size:14px;
-padding:8px;
-}
-
-table{
-font-size:12px;
-}
-
-@supports (-webkit-touch-callout: none){
-
-body{
--webkit-touch-callout:none;
--webkit-user-select:none;
-}
-
-button{
-font-size:16px;
-padding:12px;
-}
-
-}
-
-.hapusRiwayat{
-background:#dc2626;
-color:white;
-padding:8px 14px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-margin-bottom:10px;
-}
-
-.hapusRiwayat:hover{
-background:#b91c1c;
-}
-
-.resetPendapatan{
-background:#f59e0b;
-color:white;
-padding:8px 12px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-margin-top:8px;
-}
-
-.resetPendapatan:hover{
-background:#d97706;
-}
-
-}
-
 </style>
-
 </head>
 
 <body>
@@ -221,16 +202,7 @@ background:#d97706;
 <div class="card">
 Total Pendapatan
 <h2 id="totalPend">0</h2>
-
-<button onclick="resetPendapatan()" class="resetPendapatan">
-Reset Pendapatan
-</button>
-
-</div>
-
-<div class="card">
-Hari Ini
-<h2 id="todayPend">0</h2>
+<button onclick="resetPendapatan()">Reset Pendapatan</button>
 </div>
 
 </div>
@@ -240,12 +212,9 @@ Hari Ini
 <div style="padding:15px">
 
 <h3>Riwayat Transaksi</h3>
-<button onclick="hapusRiwayat()" class="hapusRiwayat">
-Hapus Riwayat
-</button>
+<button onclick="hapusRiwayat()">Hapus Riwayat</button>
 
 <table>
-
 <thead>
 <tr>
 <th>Tanggal</th>
@@ -260,6 +229,14 @@ Hapus Riwayat
 </table>
 
 </div>
+
+<audio id="alarm10">
+<source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg">
+</audio>
+
+<audio id="alarm0">
+<source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg">
+</audio>
 
 <script>
 
@@ -280,6 +257,7 @@ jam:1,
 detik:0,
 jalan:false,
 snack:{},
+peringatan:false
 }))
 
 let transaksi=JSON.parse(localStorage.getItem("trans"))||[]
@@ -311,6 +289,15 @@ String(s).padStart(2,'0')
 
 }
 
+function getStatusClass(p){
+
+if(!p.jalan && p.detik==0)return "kosong"
+if(p.jalan && p.detik>600)return "main"
+if(p.jalan && p.detik<=600 && p.detik>0)return "hampir"
+if(p.detik==0 && !p.jalan)return "habis"
+
+}
+
 function hargaMain(i){
 
 let tipe=psList[i].tipe
@@ -328,7 +315,6 @@ let total=0
 for(let i in snack){
 
 let m=menu[i]
-
 total+=m.harga*snack[i]
 
 }
@@ -362,22 +348,55 @@ render()
 }
 
 function start(i){
-dataPS[i].jalan = true
+
+if(dataPS[i].detik==0){
+
+dataPS[i].detik=dataPS[i].jam*3600
+
+}
+
+dataPS[i].jalan=true
+dataPS[i].peringatan=false
+
 save()
+
 }
 
 function pause(i){
-dataPS[i].jalan = false
+
+dataPS[i].jalan=false
 save()
+
 }
 
 function resetTimer(i){
 
-dataPS[i].detik = 0
-dataPS[i].jalan = false
-dataPS[i].snack = {}
-dataPS[i].nama = ""
-dataPS[i].jam = 1
+if(confirm("Reset timer "+psList[i].nama+" ?")){
+
+dataPS[i].detik=0
+dataPS[i].jalan=false
+dataPS[i].peringatan=false
+dataPS[i].snack={}
+
+save()
+render()
+
+}
+
+}
+
+function tambah30(i){
+
+dataPS[i].detik += 1800
+
+save()
+render()
+
+}
+
+function tambah1jam(i){
+
+dataPS[i].detik += 3600
 
 save()
 render()
@@ -386,7 +405,9 @@ render()
 
 function bayar(i){
 
-let total=hargaMain(i)+snackTotal(dataPS[i].snack)
+let totalMain=hargaMain(i)
+let totalSnack=snackTotal(dataPS[i].snack)
+let total=totalMain+totalSnack
 
 pendapatan+=total
 
@@ -399,28 +420,30 @@ nama:dataPS[i].nama,
 total
 })
 
-cetak(i,total)
+cetakStruk(i,totalMain,totalSnack,total)
 
-dataPS[i]={nama:"",jam:1,detik:0,jalan:false,snack:{}}
+dataPS[i].snack={}
 
 save()
 render()
 
 }
 
-function cetak(i,total){
+function cetakStruk(i,main,snack,total){
 
 let w=window.open("","","width=300")
 
 w.document.write(`
-<h3>RENTAL PS</h3>
+<h3>RENTAL MANTUL PS</h3>
+<hr>
 PS : ${psList[i].nama}<br>
 Nama : ${dataPS[i].nama}<br>
 Paket : ${dataPS[i].jam} Jam<br>
-Main : ${hargaMain(i)}<br>
-Snack : ${snackTotal(dataPS[i].snack)}<br>
 <hr>
-TOTAL : ${total}
+Main : Rp${main}<br>
+Snack : Rp${snack}<br>
+<hr>
+TOTAL : Rp${total}
 `)
 
 w.print()
@@ -429,15 +452,11 @@ w.print()
 
 function hapusRiwayat(){
 
-if(confirm("Apakah yakin ingin menghapus semua riwayat transaksi?")){
+if(confirm("Hapus semua riwayat transaksi?")){
 
-transaksi = []
-
-localStorage.removeItem("trans")
-
-renderHistory()
-
-alert("Riwayat transaksi berhasil dihapus")
+transaksi=[]
+save()
+render()
 
 }
 
@@ -445,15 +464,11 @@ alert("Riwayat transaksi berhasil dihapus")
 
 function resetPendapatan(){
 
-if(confirm("Yakin ingin mereset total pendapatan?")){
+if(confirm("Reset total pendapatan?")){
 
-pendapatan = 0
-
-localStorage.setItem("pend", pendapatan)
-
-document.getElementById("totalPend").innerText = pendapatan
-
-alert("Total pendapatan berhasil direset")
+pendapatan=0
+save()
+render()
 
 }
 
@@ -465,64 +480,69 @@ let html=""
 
 psList.forEach((ps,i)=>{
 
+let p=dataPS[i]
+
 let snackHTML=""
 
 menu.forEach((m,index)=>{
 
-let qty=dataPS[i].snack[index]||0
+let qty=p.snack[index]||0
 
 snackHTML+=`
-<div class="menuItem">
+
+<div class="snackBtn">
 
 ${m.nama}
+Rp${m.harga}
 
-<div class="qty">
+<div class="qtyBox">
 
 <button onclick="kurangSnack(${i},${index})">-</button>
-
 ${qty}
-
 <button onclick="tambahSnack(${i},${index})">+</button>
 
 </div>
 
 </div>
+
 `
 
 })
 
-let total=hargaMain(i)+snackTotal(dataPS[i].snack)
+let total=hargaMain(i)+snackTotal(p.snack)
 
 html+=`
 
-<div class="pscard">
+<div class="pscard ${getStatusClass(p)}">
 
 <h3>${ps.nama} (${ps.tipe})</h3>
 
-<input 
-placeholder="Nama pemain"
-value="${dataPS[i].nama || ""}"
-oninput="updateNama(${i}, this.value)">
+<input placeholder="Nama pemain"
+value="${p.nama}"
+oninput="dataPS[${i}].nama=this.value;save()">
 
-<select onchange="dataPS[${i}].jam=this.value; save();">
+<select onchange="dataPS[${i}].jam=this.value;save();">
 
-<option value="1" ${dataPS[i].jam==1?"selected":""}>1 Jam</option>
-<option value="2" ${dataPS[i].jam==2?"selected":""}>2 Jam</option>
-<option value="3" ${dataPS[i].jam==3?"selected":""}>3 Jam</option>
-<option value="5" ${dataPS[i].jam==5?"selected":""}>5 Jam</option>
+<option value="1" ${p.jam==1?"selected":""}>1 Jam</option>
+<option value="2" ${p.jam==2?"selected":""}>2 Jam</option>
+<option value="3" ${p.jam==3?"selected":""}>3 Jam</option>
+<option value="5" ${p.jam==5?"selected":""}>5 Jam</option>
 
 </select>
 
-<div class="timer" id="timer${i}">
-${format(dataPS[i].detik)}
+<div class="timer ${p.detik<=600 && p.detik>0 ? 'timerWarning' : ''}">
+${format(p.detik)}
 </div>
 
 <button class="start" onclick="start(${i})">Start</button>
 <button class="pause" onclick="pause(${i})">Pause</button>
+
+<button onclick="tambah30(${i})">+30m</button>
+<button onclick="tambah1jam(${i})">+1h</button>
+
 <button class="reset" onclick="resetTimer(${i})">Reset</button>
 
-
-<div class="menu">
+<div class="menuGrid">
 
 ${snackHTML}
 
@@ -575,23 +595,33 @@ localStorage.setItem("pend",pendapatan)
 
 }
 
-function updateNama(index, value){
-dataPS[index].nama = value
-save()
-}
-
 setInterval(()=>{
 
 dataPS.forEach((p,i)=>{
 
 if(p.jalan){
 
-p.detik++
+p.detik--
 
-let timerEl = document.getElementById("timer"+i)
+if(p.detik<=600 && !p.peringatan && p.detik>0){
 
-if(timerEl){
-timerEl.innerText = format(p.detik)
+document.getElementById("alarm10").play()
+p.peringatan=true
+
+}
+
+if(p.detik<=0){
+
+p.detik=0
+p.jalan=false
+document.getElementById("alarm0").play()
+
+}
+
+let timer=document.getElementById("timer"+i)
+
+if(timer){
+timer.innerText=format(p.detik)
 }
 
 }
@@ -608,4 +638,3 @@ render()
 
 </body>
 </html>
-```
