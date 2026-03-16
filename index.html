@@ -595,7 +595,45 @@ margin:0 0 12px;
 font-weight:700;
 }
 
+.snackGrid{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:10px;
+}
+
+.snackBtn{
+padding:12px;
+border-radius:16px;
+background:rgba(255,255,255,.055);
+border:1px solid rgba(255,255,255,.08);
+font-size:13px;
+line-height:1.45;
+color:var(--text);
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.qtyBox{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:8px;
+padding-top:4px;
+font-weight:700;
+}
+
+.qtyBox button{
+padding:7px 10px;
+min-width:38px;
+border-radius:12px;
+background:linear-gradient(135deg,#89a7ff,#7c9cff);
+color:#0c1634;
+box-shadow:none;
+}
+
 @media(max-width:560px){
+.snackGrid{grid-template-columns:1fr}
 }
 
 
@@ -712,11 +750,6 @@ justify-content:flex-start;
 }
 }
 
-
-.snackGrid{display:none!important;}
-.snackBtn{display:none!important;}
-.qtyBox{display:none!important;}
-
 </style>
 </head>
 
@@ -725,7 +758,7 @@ justify-content:flex-start;
   <div class="nav-brand">
     <div class="brand-mark">PS</div>
     <div>
-      <div class="brand-title">Rental MANTUL PS Management</div>
+      <div class="brand-title">Rental PS Manager</div>
       <div class="brand-subtitle">Billing, timer, dan rekap usaha</div>
     </div>
   </div>
@@ -747,7 +780,7 @@ justify-content:flex-start;
       <div>
         <div class="eyebrow">Home</div>
         <h1 class="sectionTitle">Ringkasan bisnis rental</h1>
-        <p class="sectionDesc">Pantau income, pengeluaran, dan performa harian dalam satu tampilan.</p>
+        <p class="sectionDesc">Pantau income, pengeluaran, dan performa harian dari satu tampilan yang lebih rapi.</p>
       </div>
       <div class="heroPill">Live Dashboard</div>
     </div>
@@ -804,7 +837,7 @@ justify-content:flex-start;
       <div>
         <div class="eyebrow">Timer</div>
         <h1 class="sectionTitle">Billing utama</h1>
-        <p class="sectionDesc">Atur sesi bermain, menu tambahan, dan pembayaran.</p>
+        <p class="sectionDesc">Berisi konten utama program untuk mengatur sesi bermain, menu tambahan, dan pembayaran.</p>
       </div>
       <div id="summary" class="summary"></div>
     </div>
@@ -1123,6 +1156,14 @@ save()
 render()
 }
 
+function hapusMenu(ps,index){
+if(dataPS[ps].snack[index]){
+delete dataPS[ps].snack[index]
+save()
+render()
+}
+}
+
 function kurangSnack(ps,index){
 if(dataPS[ps].snack[index]){
 dataPS[ps].snack[index]--
@@ -1172,6 +1213,16 @@ dataPS[i].snack={}
 save()
 render()
 }
+}
+
+function tambah5menit(i){
+dataPS[i].detik += 300
+if(dataPS[i].jalan){
+dataPS[i].endTime = (dataPS[i].endTime || Date.now()) + 300*1000
+dataPS[i].selesaiNotif=false
+}
+save()
+render()
 }
 
 function tambah30(i){
@@ -1243,11 +1294,6 @@ h3{margin:0 0 10px}
 table{width:100%;border-collapse:collapse;margin-top:10px}
 td,th{padding:7px 4px;border-bottom:1px solid #ddd;text-align:left;font-size:13px;vertical-align:top}
 .total{font-weight:700}
-
-.snackGrid{display:none!important;}
-.snackBtn{display:none!important;}
-.qtyBox{display:none!important;}
-
 </style>
 </head>
 <body>
@@ -1571,17 +1617,24 @@ let snackHTML=""
 
 menu.forEach((m,index)=>{
 let qty=p.snack[index]||0
+if(qty>0){
 snackHTML += `
-<div class="snackBtn">
-${m.nama}
-Rp${m.harga}
-<div class="qtyBox">
+<div class="menuRow">
+<div class="menuName">${m.nama}</div>
+<div class="menuPrice">Rp ${rupiah(m.harga)} x ${qty}</div>
+<div class="menuQty">
 <button onclick="kurangSnack(${i},${index})">-</button>
-${qty}
+<span>${qty}</span>
 <button onclick="tambahSnack(${i},${index})">+</button>
+<button class="reset" onclick="hapusMenu(${i},${index})">Hapus</button>
 </div>
 </div>`
+}
 })
+
+if(!snackHTML){
+snackHTML = '<div class="menuEmpty">Belum ada menu dipilih.</div>'
+}
 
 let total=hargaMain(i)+snackTotal(p.snack)
 
@@ -1632,6 +1685,7 @@ ${snackHTML}
 <div class="controls" style="margin-top:18px;">
 <button class="start" onclick="start(${i})">Start</button>
 <button class="pause" onclick="pause(${i})">Pause</button>
+<button class="add" onclick="tambah5menit(${i})">+5m</button>
 <button class="add" onclick="tambah30(${i})">+30m</button>
 <button class="add" onclick="tambah1jam(${i})">+1h</button>
 <button class="reset" onclick="resetTimer(${i})">Reset</button>
