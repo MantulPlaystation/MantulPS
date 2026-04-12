@@ -755,29 +755,29 @@ function rupiah(n){
 
 async function kirimTransaksiKeSpreadsheet(payloadRows){
   if(!SHEET_WEBAPP_URL || SHEET_WEBAPP_URL.includes("PASTE_URL")){
-    setBackupStatus('warning','Backup belum aktif','Isi URL Web App Google Sheets dulu agar transaksi bisa tersimpan otomatis.', {visible:true})
-    return {ok:false, skipped:true, reason:'missing_url'}
+    throw new Error("URL Google Sheets belum diisi")
   }
 
-  setBackupStatus('sending','Sedang backup','Mengirim transaksi ke Google Sheets...', {visible:true})
+  const formData = new FormData()
+  formData.append("rows", JSON.stringify(payloadRows))
+
+  const response = await fetch(SHEET_WEBAPP_URL, {
+    method: "POST",
+    body: formData
+  })
+
+  if(!response.ok){
+    throw new Error("HTTP " + response.status)
+  }
+
+  const text = await response.text()
 
   try{
-    const response = await fetch(SHEET_WEBAPP_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ rows: payloadRows })
-    })
-
-    if(!response.ok){
-      throw new Error('HTTP ' + response.status)
-    }
-
-    let result = null
-    try{
-      result = await response.json()
-    }catch(e){}
+    return JSON.parse(text)
+  }catch{
+    return { success: true, raw: text }
+  }
+}
 
     const rowCount = Array.isArray(payloadRows) ? payloadRows.length : 0
     const successText = result?.message
