@@ -776,19 +776,25 @@ async function kirimTransaksiKeSpreadsheet(payloadRows){
     }
 
     const rawText = await response.text()
-    let result = null
-    try{
-      result = rawText ? JSON.parse(rawText) : null
-    }catch(e){
-      result = { raw: rawText }
-    }
+let result = null
 
-    const rowCount = Array.isArray(payloadRows) ? payloadRows.length : 0
-    const successText = result?.message
-      ? result.message
-      : ('Backup berhasil. ' + rowCount + ' baris terkirim ke Google Sheets.')
-    setBackupStatus('success','Backup berhasil',successText, {visible:true, autoHideMs:5000})
-    return {ok:true, result}
+try{
+  result = rawText ? JSON.parse(rawText) : null
+}catch(e){
+  result = { raw: rawText }
+}
+
+if(result && result.success === false){
+  throw new Error(result.error || result.message || 'Apps Script mengembalikan status gagal')
+}
+
+const rowCount = Array.isArray(payloadRows) ? payloadRows.length : 0
+const successText = result?.message
+  ? result.message
+  : ('Backup berhasil. ' + rowCount + ' baris terkirim ke Google Sheets.')
+
+setBackupStatus('success','Backup berhasil',successText, {visible:true, autoHideMs:5000})
+return {ok:true, result}
   }catch(error){
     console.error("Gagal kirim ke spreadsheet:", error)
     const extraInfo = location.protocol === 'file:'
