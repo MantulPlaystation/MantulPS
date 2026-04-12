@@ -256,6 +256,7 @@ body{padding:24px 12px 28px}
 }
 @media(max-width:560px){
 body{padding:20px 12px 30px}
+.backupStatus{left:12px;right:12px;bottom:12px;max-width:none}
 .pscard{padding:18px}
 .timer{font-size:36px}
 .controls{grid-template-columns:1fr}
@@ -313,6 +314,47 @@ body.compact table th,body.compact table td{padding:8px 10px;font-size:12px}
 grid-template-columns:1fr 80px 90px;
 }
 }
+
+.backupStatus{
+position:fixed;
+right:18px;
+bottom:18px;
+z-index:120;
+max-width:min(420px, calc(100vw - 24px));
+padding:12px 14px;
+border-radius:16px;
+border:1px solid var(--line);
+background:rgba(8,12,24,.92);
+backdrop-filter:blur(16px);
+box-shadow:var(--shadow);
+display:flex;
+align-items:flex-start;
+gap:10px;
+}
+.backupStatus.hidden{display:none}
+.backupStatusIcon{
+width:12px;
+height:12px;
+border-radius:999px;
+margin-top:4px;
+flex:0 0 12px;
+background:var(--muted);
+box-shadow:0 0 0 4px rgba(255,255,255,.05);
+}
+.backupStatusContent{min-width:0}
+.backupStatusTitle{font-size:13px;font-weight:800;color:var(--text);margin-bottom:4px}
+.backupStatusText{font-size:12px;color:var(--muted);line-height:1.45}
+.backupStatus.status-idle .backupStatusIcon{background:var(--muted)}
+.backupStatus.status-sending .backupStatusIcon{background:var(--warning);animation:pulseBackup 1.2s ease-in-out infinite}
+.backupStatus.status-success .backupStatusIcon{background:var(--success)}
+.backupStatus.status-error .backupStatusIcon{background:var(--danger)}
+.backupStatus.status-warning .backupStatusIcon{background:var(--warning)}
+@keyframes pulseBackup{
+0%{transform:scale(1);opacity:.85}
+50%{transform:scale(1.18);opacity:1}
+100%{transform:scale(1);opacity:.85}
+}
+
 </style>
 </head>
 <body>
@@ -336,6 +378,15 @@ grid-template-columns:1fr 80px 90px;
     <button id="installBtn" class="add installBtn" style="display:none;">Install App</button>
   </div>
 </nav>
+
+
+<div id="backupStatus" class="backupStatus hidden status-idle" aria-live="polite">
+  <div class="backupStatusIcon"></div>
+  <div class="backupStatusContent">
+    <div id="backupStatusTitle" class="backupStatusTitle">Status backup</div>
+    <div id="backupStatusText" class="backupStatusText">Belum ada aktivitas backup.</div>
+  </div>
+</div>
 
 <main class="pageWrap">
   <section id="homeSection" class="pageSection active">
@@ -540,6 +591,42 @@ grid-template-columns:1fr 80px 90px;
 let deferredPrompt = null
 const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwO0FVYiQQsBDXXrueaK9aa4LOvnJCeKd66mdeQ3sx2vOrClTfsVvKp0UcVaRzGhxqA5w/exec"
 
+let backupStatusState = {
+  type:'idle',
+  title:'Status backup',
+  text:'Belum ada aktivitas backup.',
+  visible:false,
+  updatedAt:null
+}
+
+function renderBackupStatus(){
+  const wrap=document.getElementById('backupStatus')
+  const title=document.getElementById('backupStatusTitle')
+  const textEl=document.getElementById('backupStatusText')
+  if(!wrap || !title || !textEl) return
+  wrap.className='backupStatus status-' + (backupStatusState.type || 'idle') + (backupStatusState.visible ? '' : ' hidden')
+  title.textContent=backupStatusState.title || 'Status backup'
+  textEl.textContent=backupStatusState.text || ''
+}
+
+function setBackupStatus(type, title, text, options={}){
+  backupStatusState = {
+    type: type || 'idle',
+    title: title || 'Status backup',
+    text: text || '',
+    visible: options.visible !== false,
+    updatedAt: new Date().toISOString()
+  }
+  renderBackupStatus()
+  if(options.autoHideMs){
+    window.clearTimeout(window.__backupStatusTimer)
+    window.__backupStatusTimer = window.setTimeout(()=>{
+      backupStatusState.visible=false
+      renderBackupStatus()
+    }, options.autoHideMs)
+  }
+}
+
 async function registerServiceWorker(){
   if(!('serviceWorker' in navigator)) return
   try{ await navigator.serviceWorker.register('./sw.js') }catch(e){}
@@ -667,18 +754,41 @@ function rupiah(n){
 }
 
 async function kirimTransaksiKeSpreadsheet(payloadRows){
-  if(!SHEET_WEBAPP_URL || SHEET_WEBAPP_URL.includes("PASTE_URL")) return
+  if(!SHEET_WEBAPP_URL || SHEET_WEBAPP_URL.includes("PASTE_URL")){
+    setBackupStatus('warning','Backup belum aktif','Isi URL Web App Google Sheets dulu agar transaksi bisa tersimpan otomatis.', {visible:true})
+    return {ok:false, skipped:true, reason:'missing_url'}
+  }
+
+  setBackupStatus('sending','Sedang backup','Mengirim transaksi ke Google Sheets...', {visible:true})
 
   try{
-    await fetch(SHEET_WEBAPP_URL, {
+    const response = await fetch(SHEET_WEBAPP_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ rows: payloadRows })
     })
+
+    if(!response.ok){
+      throw new Error('HTTP ' + response.status)
+    }
+
+    let result = null
+    try{
+      result = await response.json()
+    }catch(e){}
+
+    const rowCount = Array.isArray(payloadRows) ? payloadRows.length : 0
+    const successText = result?.message
+      ? result.message
+      : ('Backup berhasil. ' + rowCount + ' baris terkirim ke Google Sheets.')
+    setBackupStatus('success','Backup berhasil',successText, {visible:true, autoHideMs:5000})
+    return {ok:true, result}
   }catch(error){
     console.error("Gagal kirim ke spreadsheet:", error)
+    setBackupStatus('error','Backup gagal','Transaksi tetap tersimpan di aplikasi, tetapi gagal dikirim ke Google Sheets. ' + (error?.message || ''), {visible:true})
+    return {ok:false, error}
   }
 }
 
@@ -844,7 +954,48 @@ function cetakStruk(i,main,snack,total){
   let w=window.open('','','width=380')
   w.document.write(`
   <html><head><title>Struk Rental PS</title>
-  <style>body{font-family:Arial,sans-serif;padding:16px;color:#111}h3{margin:0 0 10px}table{width:100%;border-collapse:collapse;margin-top:10px}td,th{padding:7px 4px;border-bottom:1px solid #ddd;text-align:left;font-size:13px;vertical-align:top}.total{font-weight:700}</style>
+  <style>body{font-family:Arial,sans-serif;padding:16px;color:#111}h3{margin:0 0 10px}table{width:100%;border-collapse:collapse;margin-top:10px}td,th{padding:7px 4px;border-bottom:1px solid #ddd;text-align:left;font-size:13px;vertical-align:top}.total{font-weight:700}
+.backupStatus{
+position:fixed;
+right:18px;
+bottom:18px;
+z-index:120;
+max-width:min(420px, calc(100vw - 24px));
+padding:12px 14px;
+border-radius:16px;
+border:1px solid var(--line);
+background:rgba(8,12,24,.92);
+backdrop-filter:blur(16px);
+box-shadow:var(--shadow);
+display:flex;
+align-items:flex-start;
+gap:10px;
+}
+.backupStatus.hidden{display:none}
+.backupStatusIcon{
+width:12px;
+height:12px;
+border-radius:999px;
+margin-top:4px;
+flex:0 0 12px;
+background:var(--muted);
+box-shadow:0 0 0 4px rgba(255,255,255,.05);
+}
+.backupStatusContent{min-width:0}
+.backupStatusTitle{font-size:13px;font-weight:800;color:var(--text);margin-bottom:4px}
+.backupStatusText{font-size:12px;color:var(--muted);line-height:1.45}
+.backupStatus.status-idle .backupStatusIcon{background:var(--muted)}
+.backupStatus.status-sending .backupStatusIcon{background:var(--warning);animation:pulseBackup 1.2s ease-in-out infinite}
+.backupStatus.status-success .backupStatusIcon{background:var(--success)}
+.backupStatus.status-error .backupStatusIcon{background:var(--danger)}
+.backupStatus.status-warning .backupStatusIcon{background:var(--warning)}
+@keyframes pulseBackup{
+0%{transform:scale(1);opacity:.85}
+50%{transform:scale(1.18);opacity:1}
+100%{transform:scale(1);opacity:.85}
+}
+
+</style>
   </head><body>
   <h3>RENTAL MANTUL PS</h3>
   <div>${new Date().toLocaleString('id-ID')}</div><hr>
@@ -1337,6 +1488,10 @@ ensureNotificationPermission()
 registerServiceWorker()
 setupInstallPrompt()
 applyCompactMode()
+renderBackupStatus()
+if(!SHEET_WEBAPP_URL || SHEET_WEBAPP_URL.includes("PASTE_URL")){
+  setBackupStatus('warning','Backup belum aktif','Masukkan URL Web App Google Sheets untuk menyalakan auto backup.', {visible:true})
+}
 recalcRunningTimers(true)
 setInterval(tick,1000)
 render()
