@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Billing Rental MANTUL PS</title>
 <meta name="theme-color" content="#0b1020">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -11,8 +10,6 @@
 <meta name="apple-mobile-web-app-title" content="Rental PS">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -34,7 +31,6 @@
 }
 
 *{box-sizing:border-box}
-
 html,body{
 margin:0;
 padding:0;
@@ -46,10 +42,7 @@ linear-gradient(160deg,var(--bg),#0d1325 45%, #0a0f1d 100%);
 color:var(--text);
 min-height:100%;
 }
-
-body{
-padding:110px 18px 42px;
-}
+body{padding:110px 18px 42px}
 
 .navbar{
 position:fixed;
@@ -68,200 +61,62 @@ background:rgba(8,12,24,.78);
 backdrop-filter:blur(18px);
 box-shadow:var(--shadow);
 }
-
-.nav-brand{
-display:flex;
-align-items:center;
-gap:12px;
-min-width:240px;
-}
-
+.nav-brand{display:flex;align-items:center;gap:12px;min-width:240px}
 .brand-mark{
-width:46px;
-height:46px;
-border-radius:16px;
-display:grid;
-place-items:center;
-font-weight:800;
-background:linear-gradient(135deg,var(--accent),var(--accent-2));
-color:white;
-box-shadow:0 12px 24px rgba(124,156,255,.28);
+width:46px;height:46px;border-radius:16px;display:grid;place-items:center;font-weight:800;
+background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white;
+box-shadow:0 12px 24px rgba(124,156,255,.28)
 }
-
 .brand-title{font-size:16px;font-weight:800}
 .brand-subtitle{font-size:12px;color:var(--muted)}
-
-.nav-links{
-display:flex;
-align-items:center;
-gap:8px;
-flex-wrap:wrap;
-}
-
+.nav-links,.nav-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .nav-link{
-padding:10px 16px;
-border-radius:999px;
-background:rgba(255,255,255,.04);
-border:1px solid transparent;
-color:var(--text);
-box-shadow:none;
+padding:10px 16px;border-radius:999px;background:rgba(255,255,255,.04);
+border:1px solid transparent;color:var(--text);box-shadow:none
 }
-
 .nav-link.active{
 background:linear-gradient(135deg,rgba(124,156,255,.22),rgba(155,124,255,.18));
-border-color:rgba(124,156,255,.25);
+border-color:rgba(124,156,255,.25)
 }
-
-.nav-actions{display:flex;align-items:center;gap:10px}
 .installBtn{min-width:150px}
 .pageWrap{max-width:1280px;margin:0 auto}
 .pageSection{display:none;animation:fadeIn .22s ease}
 .pageSection.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(6px)}
-to{opacity:1;transform:none}
-}
-
-.sectionHero{
-display:flex;
-justify-content:space-between;
-align-items:flex-start;
-gap:18px;
-margin-bottom:20px;
-flex-wrap:wrap;
-}
-
-.eyebrow,.panelEyebrow{
-font-size:12px;
-text-transform:uppercase;
-letter-spacing:.14em;
-color:var(--muted);
-margin-bottom:8px;
-font-weight:700;
-}
-
+.sectionHero{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:20px;flex-wrap:wrap}
+.eyebrow,.panelEyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:8px;font-weight:700}
 .sectionTitle{margin:0;font-size:clamp(28px,4vw,42px);font-weight:800}
 .sectionDesc{margin:8px 0 0;color:var(--muted);max-width:760px}
-.heroPill{
-padding:10px 14px;
-border-radius:999px;
-background:rgba(255,255,255,.05);
-border:1px solid var(--line);
-color:var(--text);
-}
+.heroPill{padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--text)}
 
 .contentGrid{display:grid;gap:20px;margin-bottom:20px}
 .contentGrid.twoCols{grid-template-columns:repeat(2,minmax(0,1fr))}
 .contentGrid.oneCol{grid-template-columns:1fr}
-
 .panelCard{
-background:var(--panel);
-backdrop-filter:blur(18px);
-border:1px solid var(--line);
-border-radius:24px;
-padding:20px;
-box-shadow:var(--shadow);
+background:var(--panel);backdrop-filter:blur(18px);border:1px solid var(--line);
+border-radius:24px;padding:20px;box-shadow:var(--shadow)
 }
-
-.panelHead{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:12px;
-margin-bottom:16px;
-flex-wrap:wrap;
-}
-
+.panelHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
 .panelHead h3{margin:0;font-size:22px}
-
-.topStats{
-display:grid;
-grid-template-columns:repeat(4,minmax(0,1fr));
-gap:16px;
-margin-bottom:20px;
-}
-
-.statCard{
-padding:18px;
-border-radius:22px;
-background:var(--panel);
-border:1px solid var(--line);
-box-shadow:var(--shadow);
-}
-
-.statLabel{
-font-size:12px;
-text-transform:uppercase;
-letter-spacing:.12em;
-color:var(--muted);
-margin-bottom:8px;
-}
-
+.topStats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:20px}
+.statCard{padding:18px;border-radius:22px;background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow)}
+.statLabel{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:8px}
 .statValue{font-size:28px;font-weight:800}
-
-.barChart{
-display:grid;
-grid-template-columns:repeat(7,minmax(0,1fr));
-gap:12px;
-align-items:end;
-min-height:250px;
-padding-top:12px;
-}
-
-.barItem{
-display:flex;
-flex-direction:column;
-justify-content:flex-end;
-align-items:center;
-gap:10px;
-height:100%;
-}
-
-.barValue{
-width:100%;
-max-width:88px;
-border-radius:18px 18px 8px 8px;
-background:linear-gradient(180deg,var(--accent),var(--accent-2));
-min-height:14px;
-box-shadow:0 12px 26px rgba(124,156,255,.22);
-}
-
+.barChart{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px;align-items:end;min-height:250px;padding-top:12px}
+.barItem{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:10px;height:100%}
+.barValue{width:100%;max-width:88px;border-radius:18px 18px 8px 8px;background:linear-gradient(180deg,var(--accent),var(--accent-2));min-height:14px;box-shadow:0 12px 26px rgba(124,156,255,.22)}
 .barLabel,.barNumber{font-size:12px;text-align:center}
 .barLabel{color:var(--muted)}
 .barNumber{color:var(--text);font-weight:700}
-
-.overviewBreakdown,.sessionList,.simpleList{
-display:flex;
-flex-direction:column;
-gap:12px;
-}
-
-.breakdownRow,.simpleRow{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:12px;
-padding:14px 16px;
-border-radius:16px;
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,255,255,.08);
-}
-
+.overviewBreakdown,.sessionList,.simpleList{display:flex;flex-direction:column;gap:12px}
+.breakdownRow,.simpleRow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
 .breakdownRow span:first-child{color:var(--muted)}
 .simpleRow small{color:var(--muted);display:block;margin-top:4px}
 .tableWrap{overflow:auto}
 
-.expenseForm{
-display:grid;
-grid-template-columns:1.2fr 1fr 1fr auto;
-gap:12px;
-}
-
-.expenseForm input,
-.expenseForm select,
-.pscard input,
-.pscard select{
+.expenseForm{display:grid;grid-template-columns:1.2fr 1fr 1fr auto;gap:12px}
+.expenseForm input,.expenseForm select,.pscard input,.pscard select,.menuDropdownSelect,.menuQtyInput{
 width:100%;
 padding:12px 14px;
 border-radius:14px;
@@ -269,378 +124,72 @@ border:1px solid rgba(255,255,255,.10);
 background:rgba(255,255,255,.06);
 color:var(--text);
 outline:none;
+display:block;
+min-height:46px;
+appearance:auto;
+-webkit-appearance:menulist;
 }
 
-.expenseForm select option,
-.pscard select option{
-background:#121a30;
-color:#e6e9ff;
+.menuDropdownSelect{
+background:rgba(255,255,255,.09);
+border:1px solid rgba(124,156,255,.35);
+font-weight:600;
 }
-
-.rekapCards{
-display:grid;
-grid-template-columns:repeat(3,minmax(0,1fr));
-gap:12px;
-}
-
-.rekapCard{
-padding:16px;
-border-radius:18px;
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,255,255,.08);
-}
-
+.expenseForm select option,.pscard select option,.menuDropdownSelect option{background:#121a30;color:#e6e9ff}
+.rekapCards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.rekapCard{padding:16px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
 .rekapCard h4{margin:0 0 10px;font-size:16px}
-.rekapMeta{
-display:flex;
-justify-content:space-between;
-gap:8px;
-color:var(--muted);
-font-size:13px;
-margin-bottom:8px;
-}
-
+.rekapMeta{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:13px;margin-bottom:8px}
 .summary{
 display:grid;
 grid-template-columns:repeat(3,minmax(150px,1fr));
 gap:12px;
-width:min(100%,520px);
+width:min(100%,800px);
 }
-
+.summary-card{background:var(--panel);backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:20px;padding:16px 18px;box-shadow:var(--shadow)}
+.summary-label{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:8px}
+.summary-value{font-size:24px;font-weight:800}
 .dashboardCard,.historyCard{margin-bottom:20px}
 
-@media(max-width:980px){
-.contentGrid.twoCols,.topStats,.rekapCards,.expenseForm{grid-template-columns:1fr}
-.navbar{
-position:sticky;
-top:12px;
-left:12px;
-right:12px;
-padding:14px;
-flex-direction:column;
-align-items:stretch;
-}
-body{padding:24px 12px 28px}
-.nav-brand,.nav-actions,.nav-links{width:100%}
-.nav-links{justify-content:space-between}
-}
-
-@media(max-width:760px){
-.barChart{grid-template-columns:repeat(4,minmax(0,1fr))}
-.summary{grid-template-columns:1fr}
-}
-
-.container{
-max-width:1280px;
-margin:auto;
-}
-
-h1{
-margin:0 0 8px;
-font-size:clamp(28px,4vw,44px);
-font-weight:800;
-letter-spacing:.3px;
-}
-
-.subtitle{
-color:var(--muted);
-margin:0 0 28px;
-font-size:15px;
-}
-
-.topbar{
-display:flex;
-justify-content:space-between;
-align-items:flex-end;
-gap:18px;
-margin-bottom:28px;
-flex-wrap:wrap;
-}
-
-.brand{
-display:flex;
-flex-direction:column;
-gap:6px;
-}
-
-.brand-badge{
-display:inline-flex;
-align-items:center;
-gap:8px;
-width:max-content;
-padding:8px 14px;
-border:1px solid var(--line);
-border-radius:999px;
-background:rgba(255,255,255,.05);
-backdrop-filter:blur(10px);
-color:#d9e2ff;
-font-size:13px;
-}
-
-.brand-badge::before{
-content:"";
-width:8px;
-height:8px;
-border-radius:50%;
-background:linear-gradient(135deg,var(--accent),var(--accent-2));
-box-shadow:0 0 18px rgba(124,156,255,.75);
-}
-
-.summary{
-display:grid;
-grid-template-columns:repeat(3,minmax(160px,1fr));
-gap:14px;
-width:min(100%,520px);
-}
-
-.summary-card{
-background:var(--panel);
-backdrop-filter:blur(18px);
-border:1px solid var(--line);
-border-radius:20px;
-padding:16px 18px;
-box-shadow:var(--shadow);
-}
-
-.summary-label{
-font-size:12px;
-text-transform:uppercase;
-letter-spacing:.12em;
-color:var(--muted);
-margin-bottom:8px;
-}
-
-.summary-value{
-font-size:24px;
-font-weight:800;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:20px;
-}
-
+.container{max-width:1280px;margin:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
 .pscard{
-position:relative;
-overflow:hidden;
-background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-backdrop-filter:blur(18px);
-border:1px solid var(--line);
-border-radius:var(--radius);
-padding:22px;
-box-shadow:var(--shadow);
-transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+position:relative;overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:var(--radius);padding:22px;
+box-shadow:var(--shadow);transition:all .18s ease
 }
-
-.pscard:hover{
-transform:translateY(-4px);
-box-shadow:0 22px 60px rgba(0,0,0,.42);
-}
-
-.pscard::after{
-content:"";
-position:absolute;
-inset:auto -40px -40px auto;
-width:140px;
-height:140px;
-background:radial-gradient(circle, rgba(124,156,255,.18), transparent 65%);
-pointer-events:none;
-}
-
-.psname{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:10px;
-margin-bottom:16px;
-font-size:22px;
-font-weight:800;
-}
-
-.badge{
-padding:7px 12px;
-border-radius:999px;
-font-size:12px;
-font-weight:700;
-letter-spacing:.04em;
-border:1px solid transparent;
-}
-
+.pscard:hover{transform:translateY(-4px);box-shadow:0 22px 60px rgba(0,0,0,.42)}
+.pscard::after{content:"";position:absolute;inset:auto -40px -40px auto;width:140px;height:140px;background:radial-gradient(circle, rgba(124,156,255,.18), transparent 65%);pointer-events:none}
+.psname{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;font-size:22px;font-weight:800}
+.badge{padding:7px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.04em;border:1px solid transparent}
 .badgeIdle{background:rgba(255,255,255,.06);color:#dce4ff;border-color:var(--line)}
 .badgePlay{background:rgba(31,201,138,.15);color:#8bf1c4;border-color:rgba(31,201,138,.25)}
 .badgeWarn{background:rgba(255,184,77,.16);color:#ffd089;border-color:rgba(255,184,77,.28)}
 .badgeOver{background:rgba(255,107,129,.16);color:#ff98a8;border-color:rgba(255,107,129,.28)}
-
-.meta{
-display:flex;
-justify-content:space-between;
-gap:12px;
-color:var(--muted);
-font-size:14px;
-margin-bottom:14px;
-}
-
-.timer{
-font-size:44px;
-font-weight:900;
-letter-spacing:1.4px;
-text-align:center;
-padding:18px 14px;
-border-radius:20px;
-background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-border:1px solid rgba(255,255,255,.09);
-box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
-margin:14px 0 16px;
-}
-
-.timerWarning{
-color:#ffd089;
-text-shadow:0 0 18px rgba(255,184,77,.2);
-}
-
-.harga{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:14px 16px;
-margin:0 0 18px;
-border-radius:18px;
-background:rgba(255,255,255,.05);
-border:1px solid var(--line);
-font-size:15px;
-color:var(--muted);
-}
-
-.harga b{
-font-size:24px;
-color:var(--text);
-}
-
-.controls{
-display:grid;
-grid-template-columns:repeat(2,minmax(0,1fr));
-gap:10px;
-}
-
-button{
-appearance:none;
-border:none;
-outline:none;
-padding:13px 14px;
-border-radius:16px;
-font-weight:700;
-font-size:14px;
-cursor:pointer;
-transition:transform .18s ease, opacity .18s ease, box-shadow .18s ease, filter .18s ease;
-box-shadow:0 10px 22px rgba(0,0,0,.22);
-}
-
+.meta{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:14px;margin-bottom:14px}
+.timer{font-size:44px;font-weight:900;letter-spacing:1.4px;text-align:center;padding:18px 14px;border-radius:20px;background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 rgba(255,255,255,.08);margin:14px 0 16px;transition:all .18s ease}
+.timerWarning{color:#ffd089;text-shadow:0 0 18px rgba(255,184,77,.2)}
+.harga{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;margin:0 0 18px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid var(--line);font-size:15px;color:var(--muted);transition:all .18s ease}
+.harga b{font-size:24px;color:var(--text)}
+.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+button{appearance:none;border:none;outline:none;padding:13px 14px;border-radius:16px;font-weight:700;font-size:14px;cursor:pointer;transition:all .18s ease;box-shadow:0 10px 22px rgba(0,0,0,.22)}
 button:hover{transform:translateY(-2px);filter:brightness(1.04)}
 button:active{transform:translateY(0)}
-button:disabled{
-opacity:.45;
-cursor:not-allowed;
-transform:none;
-filter:none;
-}
-
+button:disabled{opacity:.45;cursor:not-allowed;transform:none;filter:none}
 button.start{background:linear-gradient(135deg,#28d99c,#1fc98a);color:#082417}
 button.pause{background:linear-gradient(135deg,#ffc46b,#ffb84d);color:#30200a}
 button.reset{background:linear-gradient(135deg,#ff8ea0,#ff6b81);color:#2f0912}
 button.add{background:linear-gradient(135deg,#89a7ff,#7c9cff);color:#0c1634}
-
 .pscardMain{border-color:rgba(124,156,255,.28)}
 .pscardJalan{border-color:rgba(31,201,138,.24)}
 .pscardWarning{border-color:rgba(255,184,77,.28)}
 .pscardHabis{border-color:rgba(255,107,129,.3)}
-
-.footer-note{
-margin-top:26px;
-padding:16px 18px;
-border:1px solid var(--line);
-border-radius:20px;
-background:rgba(255,255,255,.04);
-color:var(--muted);
-font-size:14px;
-text-align:center;
-}
-
-@media(max-width:860px){
-.summary{grid-template-columns:1fr}
-.topbar{align-items:flex-start}
-}
-
-@media(max-width:560px){
-body{padding:20px 12px 30px}
-.pscard{padding:18px}
-.timer{font-size:36px}
-.controls{grid-template-columns:1fr}
-}
-
-.menuSection{
-margin-top:18px;
-padding:16px;
-border-radius:18px;
-background:rgba(255,255,255,.045);
-border:1px solid var(--line);
-}
-
-.menuTitle{
-font-size:13px;
-text-transform:uppercase;
-letter-spacing:.12em;
-color:var(--muted);
-margin:0 0 12px;
-font-weight:700;
-}
-
-.snackGrid{
-display:grid;
-grid-template-columns:repeat(2,minmax(0,1fr));
-gap:10px;
-}
-
-.snackBtn{
-padding:12px;
-border-radius:16px;
-background:rgba(255,255,255,.055);
-border:1px solid rgba(255,255,255,.08);
-font-size:13px;
-line-height:1.45;
-color:var(--text);
-display:flex;
-flex-direction:column;
-gap:8px;
-}
-
-.qtyBox{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:8px;
-padding-top:4px;
-font-weight:700;
-}
-
-.qtyBox button{
-padding:7px 10px;
-min-width:38px;
-border-radius:12px;
-background:linear-gradient(135deg,#89a7ff,#7c9cff);
-color:#0c1634;
-box-shadow:none;
-}
-
-@media(max-width:560px){
-.snackGrid{grid-template-columns:1fr}
-}
-
-
+.menuSection{margin-top:18px;padding:16px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid var(--line);transition:all .18s ease}
+.menuTitle{font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:0 0 12px;font-weight:700}
 .menuDropdownRow{
 display:grid;
-grid-template-columns:minmax(0,1.5fr) 120px auto;
-gap:10px;
+grid-template-columns:minmax(0,1fr) 90px 110px;
+gap:12px;
 align-items:center;
 margin-bottom:14px;
 }
@@ -654,105 +203,118 @@ border:1px solid rgba(255,255,255,.10);
 background:rgba(255,255,255,.06);
 color:var(--text);
 outline:none;
+min-height:46px;
+}
+
+.menuDropdownSelect{
+appearance:none;
+-webkit-appearance:none;
+-moz-appearance:none;
+padding-right:42px;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3E%3Cpath d='M5.5 7.5 10 12l4.5-4.5'/%3E%3C/svg%3E");
+background-repeat:no-repeat;
+background-position:right 14px center;
+background-size:16px;
+}
+
+.menuQtyInput{
+text-align:center;
 }
 
 .menuDropdownSelect option{
 background:#121a30;
 color:#dfe6ff;
 }
+.menuList{display:flex;flex-direction:column;gap:10px}
+.menuRow{display:grid;grid-template-columns:minmax(0,1.5fr) 120px 110px;gap:10px;align-items:center;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);transition:all .18s ease}
+.menuName{font-size:14px;font-weight:600;color:var(--text)}
+.menuPrice{font-size:13px;color:var(--muted);text-align:right}
+.menuQty{display:flex;align-items:center;justify-content:flex-end;gap:8px;font-weight:700}
+.menuQty button{padding:7px 10px;min-width:36px;border-radius:12px;background:linear-gradient(135deg,#89a7ff,#7c9cff);color:#0c1634;box-shadow:none}
+.menuEmpty{padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.10);color:var(--muted);font-size:14px}
+.billBreakdown{margin-top:12px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:8px;transition:all .18s ease}
+.billLine{display:flex;justify-content:space-between;gap:12px;font-size:14px;color:var(--muted)}
+.billLine strong{color:var(--text);font-size:18px}
+.footer-note{margin-top:26px;padding:16px 18px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.04);color:var(--muted);font-size:14px;text-align:center}
 
-.menuList{
-display:flex;
-flex-direction:column;
-gap:10px;
+table{width:100%;border-collapse:collapse}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08)}
+strong{color:var(--text)}
+
+@media(max-width:980px){
+.contentGrid.twoCols,.topStats,.rekapCards,.expenseForm{grid-template-columns:1fr}
+.navbar{position:sticky;top:12px;left:12px;right:12px;padding:14px;flex-direction:column;align-items:stretch}
+body{padding:24px 12px 28px}
+.nav-brand,.nav-actions,.nav-links{width:100%}
+.nav-links{justify-content:space-between}
 }
-
-.menuRow{
-display:grid;
-grid-template-columns:minmax(0,1.5fr) 120px 110px;
-gap:10px;
-align-items:center;
-padding:10px 12px;
-border-radius:14px;
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,255,255,.08);
-}
-
-.menuName{
-font-size:14px;
-font-weight:600;
-color:var(--text);
-}
-
-.menuPrice{
-font-size:13px;
-color:var(--muted);
-text-align:right;
-}
-
-.menuQty{
-display:flex;
-align-items:center;
-justify-content:flex-end;
-gap:8px;
-font-weight:700;
-}
-
-.menuQty button{
-padding:7px 10px;
-min-width:36px;
-border-radius:12px;
-background:linear-gradient(135deg,#89a7ff,#7c9cff);
-color:#0c1634;
-box-shadow:none;
-}
-
-.menuEmpty{
-padding:12px 14px;
-border-radius:14px;
-background:rgba(255,255,255,.04);
-border:1px dashed rgba(255,255,255,.10);
-color:var(--muted);
-font-size:14px;
-}
-
-.billBreakdown{
-margin-top:12px;
-padding:12px 14px;
-border-radius:14px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.08);
-display:flex;
-flex-direction:column;
-gap:8px;
-}
-
-.billLine{
-display:flex;
-justify-content:space-between;
-gap:12px;
-font-size:14px;
-color:var(--muted);
-}
-
-.billLine strong{
-color:var(--text);
-font-size:18px;
-}
-
 @media(max-width:760px){
-.menuDropdownRow,.menuRow{
-grid-template-columns:1fr;
+.barChart{grid-template-columns:repeat(4,minmax(0,1fr))}
+.summary{grid-template-columns:1fr}
+.menuDropdownRow,.menuRow{grid-template-columns:1fr}
+.menuPrice,.menuQty{text-align:left;justify-content:flex-start}
 }
-.menuPrice,.menuQty{
-text-align:left;
-justify-content:flex-start;
-}
+@media(max-width:560px){
+body{padding:20px 12px 30px}
+.pscard{padding:18px}
+.timer{font-size:36px}
+.controls{grid-template-columns:1fr}
 }
 
+/* Compact mode */
+body.compact .container{max-width:1400px}
+body.compact .grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+body.compact .pscard{padding:14px;border-radius:18px}
+body.compact .psname{font-size:16px;margin-bottom:10px}
+body.compact .meta{font-size:12px;margin-bottom:10px}
+body.compact .timer{font-size:28px;padding:12px 10px;margin:10px 0 12px;border-radius:14px}
+body.compact .harga{padding:10px 12px;margin:0 0 12px;font-size:13px;border-radius:14px}
+body.compact .harga b{font-size:18px}
+body.compact .menuSection{margin-top:12px;padding:12px;border-radius:14px}
+body.compact .menuTitle{font-size:11px;margin-bottom:8px}
+body.compact .menuDropdownRow{
+grid-template-columns:minmax(0,1fr) 80px 90px;
+gap:8px;
+margin-bottom:10px;
+}
+body.compact .menuDropdownSelect,
+body.compact .menuQtyInput,
+body.compact .pscard input,
+body.compact .pscard select{padding:9px 10px;font-size:12px;border-radius:12px}
+body.compact .menuRow{padding:8px 10px;gap:8px;border-radius:12px}
+body.compact .menuName{font-size:12px}
+body.compact .menuPrice{font-size:11px}
+body.compact .menuQty{gap:6px;font-size:12px}
+body.compact .menuQty button{padding:5px 8px;min-width:30px;font-size:11px}
+body.compact .billBreakdown{margin-top:10px;padding:10px 12px;gap:6px;border-radius:12px}
+body.compact .billLine{font-size:12px}
+body.compact .billLine strong{font-size:15px}
+body.compact .controls{gap:8px}
+body.compact button{padding:9px 10px;font-size:12px;border-radius:12px}
+body.compact .badge{padding:5px 9px;font-size:10px}
+body.compact .summary{
+grid-template-columns:repeat(3,minmax(120px,1fr));
+gap:10px;
+}
+body.compact .summary-card{padding:12px 14px;border-radius:16px}
+body.compact .summary-label{font-size:10px;margin-bottom:6px}
+body.compact .summary-value{font-size:18px}
+body.compact .panelCard{padding:16px;border-radius:18px}
+body.compact .sectionTitle{font-size:clamp(22px,3vw,30px)}
+body.compact .sectionDesc{font-size:13px}
+body.compact .topStats{gap:12px}
+body.compact .statCard{padding:14px;border-radius:16px}
+body.compact .statValue{font-size:22px}
+body.compact .barChart{min-height:180px;gap:8px}
+body.compact .simpleRow,body.compact .breakdownRow{padding:10px 12px;border-radius:12px}
+body.compact table th,body.compact table td{padding:8px 10px;font-size:12px}
+@media(max-width:560px){
+.menuDropdownRow{
+grid-template-columns:1fr 80px 90px;
+}
+}
 </style>
 </head>
-
 <body>
 <nav class="navbar">
   <div class="nav-brand">
@@ -770,6 +332,7 @@ justify-content:flex-start;
   </div>
 
   <div class="nav-actions">
+    <button id="compactBtn" class="nav-link" onclick="toggleCompactMode()">Mode Compact: OFF</button>
     <button id="installBtn" class="add installBtn" style="display:none;">Install App</button>
   </div>
 </nav>
@@ -844,13 +407,9 @@ justify-content:flex-start;
 
     <div class="contentGrid oneCol">
       <div class="panelCard dashboardCard">
-        <div class="dashboard">
-          <div class="card">
-            Total Pendapatan
-            <h2 id="totalPend">0</h2>
-            <button onclick="resetPendapatan()">Reset Pendapatan</button>
-          </div>
-        </div>
+        <div>Total Pendapatan</div>
+        <h2 id="totalPend">0</h2>
+        <button onclick="resetPendapatan()">Reset Pendapatan</button>
       </div>
     </div>
 
@@ -868,14 +427,14 @@ justify-content:flex-start;
       <div class="tableWrap">
         <table>
           <thead>
-  <tr>
-    <th>Tanggal</th>
-    <th>PS</th>
-    <th>Nama</th>
-    <th>Total</th>
-    <th>Aksi</th>
-  </tr>
-</thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>PS</th>
+              <th>Nama</th>
+              <th>Total</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
           <tbody id="history"></tbody>
         </table>
       </div>
@@ -900,7 +459,6 @@ justify-content:flex-start;
             <h3>Tambah pengeluaran baru</h3>
           </div>
         </div>
-
         <div class="expenseForm">
           <input id="expenseName" placeholder="Nama pengeluaran, contoh: Beli minuman">
           <select id="expenseCategory">
@@ -975,843 +533,814 @@ justify-content:flex-start;
   </section>
 </main>
 
-<audio id="alarm10">
-  <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg">
-</audio>
-
-<audio id="alarm0">
-  <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg">
-</audio>
+<audio id="alarm10"><source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+<audio id="alarm0"><source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"></audio>
 
 <script>
 let deferredPrompt = null
+const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwO0FVYiQQsBDXXrueaK9aa4LOvnJCeKd66mdeQ3sx2vOrClTfsVvKp0UcVaRzGhxqA5w/exec"
 
 async function registerServiceWorker(){
-if(!("serviceWorker" in navigator)) return
-try{
-await navigator.serviceWorker.register("./sw.js")
-}catch(e){}
+  if(!('serviceWorker' in navigator)) return
+  try{ await navigator.serviceWorker.register('./sw.js') }catch(e){}
 }
 
 function setupInstallPrompt(){
-const installBtn = document.getElementById("installBtn")
-window.addEventListener("beforeinstallprompt", (e)=>{
-e.preventDefault()
-deferredPrompt = e
-if(installBtn) installBtn.style.display = "inline-block"
-})
-
-if(installBtn){
-installBtn.addEventListener("click", async ()=>{
-if(!deferredPrompt) return
-deferredPrompt.prompt()
-try{ await deferredPrompt.userChoice }catch(e){}
-deferredPrompt = null
-installBtn.style.display = "none"
-})
-}
-
-window.addEventListener("appinstalled", ()=>{
-deferredPrompt = null
-if(installBtn) installBtn.style.display = "none"
-notifyUser("Aplikasi terpasang", "Rental PS berhasil di-install ke perangkat ini.")
-})
+  const installBtn = document.getElementById('installBtn')
+  window.addEventListener('beforeinstallprompt', (e)=>{
+    e.preventDefault()
+    deferredPrompt = e
+    if(installBtn) installBtn.style.display = 'inline-block'
+  })
+  if(installBtn){
+    installBtn.addEventListener('click', async ()=>{
+      if(!deferredPrompt) return
+      deferredPrompt.prompt()
+      try{ await deferredPrompt.userChoice }catch(e){}
+      deferredPrompt = null
+      installBtn.style.display = 'none'
+    })
+  }
+  window.addEventListener('appinstalled', ()=>{
+    deferredPrompt = null
+    if(installBtn) installBtn.style.display = 'none'
+    notifyUser('Aplikasi terpasang', 'Rental PS berhasil di-install ke perangkat ini.')
+  })
 }
 
 const psList=[
-{nama:"PS1",tipe:"PS3"},
-{nama:"PS2",tipe:"PS3"},
-{nama:"PS3",tipe:"PS3"},
-{nama:"PS4",tipe:"PS4"},
-{nama:"PS5",tipe:"PS4"}
+  {nama:'PS1',tipe:'PS3'},
+  {nama:'PS2',tipe:'PS3'},
+  {nama:'PS3',tipe:'PS3'},
+  {nama:'PS4',tipe:'PS4'},
+  {nama:'PS5',tipe:'PS4'}
 ]
 
-const hargaPS3={1:5000,2:10000,3:13000,4:18000,5:22000}
-const hargaPS4={1:8000,2:15000,3:22000,5:38000}
+const hargaPS3={1:5000,2:10000,3:13000,4:18000,5:22000,6:30000,12:55000,24:100000}
+const hargaPS4={1:8000,2:15000,3:22000,4:18000,5:38000,6:48000,12:90000,24:150000}
 
-function createDefaultPS(ps){
-return {
-nama:"",
-jam:1,
-detik:0,
-jalan:false,
-snack:{},
-peringatan:false,
-selesaiNotif:false,
-endTime:null,
-lastTick:null
-}
+const paketMabar={
+  PS3:{label:'Paket Mabar 3 Jam', jam:3, harga:20000, items:[{nama:'Chuba',qty:2},{nama:'Kopi Liong / Nutrisari',qty:1}]},
+  PS4:{label:'Paket Mabar 3 Jam', jam:3, harga:32000, items:[{nama:'Chuba',qty:2},{nama:'Kopi Liong / Nutrisari',qty:1}]}
 }
 
-let dataPS=(JSON.parse(localStorage.getItem("dataPS"))||psList.map(createDefaultPS)).map((p,i)=>({
-...createDefaultPS(psList[i]),
-...p
+function createDefaultPS(){
+  return {nama:'',jam:1,detik:0,jalan:false,snack:{},peringatan:false,selesaiNotif:false,endTime:null,lastTick:null,billingMode:'reguler',paketDrink:'Kopi Liong'}
+}
+
+let dataPS=(JSON.parse(localStorage.getItem('dataPS'))||psList.map(()=>createDefaultPS())).map((p,i)=>({
+  ...createDefaultPS(psList[i]),
+  ...p
 }))
-
-let transaksi=JSON.parse(localStorage.getItem("trans"))||[]
-let pendapatan=parseInt(localStorage.getItem("pend"))||0
-let pengeluaran=JSON.parse(localStorage.getItem("pengeluaran"))||[]
+let transaksi=JSON.parse(localStorage.getItem('trans'))||[]
+let pendapatan=parseInt(localStorage.getItem('pend'))||0
+let pengeluaran=JSON.parse(localStorage.getItem('pengeluaran'))||[]
 
 const menu=[
-{nama:"Pop Mie",harga:7000,kategori:"Makanan"},
-{nama:"Chuba",harga:1000,kategori:"Snack"},
-{nama:"Chitato Lite",harga:2000,kategori:"Snack"},
-{nama:"Good Time",harga:2000,kategori:"Snack"},
-{nama:"Oreo",harga:2000,kategori:"Snack"},
-{nama:"Beng Beng",harga:3000,kategori:"Snack"},
-{nama:"Kapal Api",harga:5000,kategori:"Minuman"},
-{nama:"Good Day",harga:5000,kategori:"Minuman"},
-{nama:"Kopi Liong",harga:5000,kategori:"Minuman"},
-{nama:"Tea Jus",harga:3000,kategori:"Minuman"},
-{nama:"Teh Tarik",harga:7000,kategori:"Minuman"},
-{nama:"Nutrisari",harga:5000,kategori:"Minuman"}
+  {nama:'Pop Mie',harga:7000,kategori:'Makanan'},
+  {nama:'Chuba',harga:1000,kategori:'Snack'},
+  {nama:'Chitato Lite',harga:2000,kategori:'Snack'},
+  {nama:'Good Time',harga:2000,kategori:'Snack'},
+  {nama:'Oreo',harga:2000,kategori:'Snack'},
+  {nama:'Beng Beng',harga:3000,kategori:'Snack'},
+  {nama:'Kapal Api',harga:5000,kategori:'Minuman'},
+  {nama:'Good Day',harga:5000,kategori:'Minuman'},
+  {nama:'Kopi Liong',harga:5000,kategori:'Minuman'},
+  {nama:'Tea Jus',harga:3000,kategori:'Minuman'},
+  {nama:'Teh Tarik',harga:7000,kategori:'Minuman'},
+  {nama:'Nutrisari',harga:5000,kategori:'Minuman'}
 ]
 
-function format(w){
-let h=Math.floor(w/3600)
-let m=Math.floor((w%3600)/60)
-let s=w%60
+function buildSpreadsheetRows(i, totalMain, totalSnack, total){
+  const now = new Date()
+  const tanggalHari = now.toLocaleString("id-ID", {
+    weekday: "long",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit"
+  })
 
-return String(h).padStart(2,"0")+":"+
-String(m).padStart(2,"0")+":"+
-String(s).padStart(2,"0")
+  const rincian = menuRincian(dataPS[i].snack)
+  const billingLabel = getBillingLabel(i)
+  const baseRow = {
+    createdAt: now.toISOString(),
+    tanggalHari,
+    ps: psList[i].nama,
+    tipePS: psList[i].tipe,
+    namaPelanggan: dataPS[i].nama || '-',
+    modeBilling: isPaketMabar(i) ? 'Paket Mabar' : 'Reguler',
+    billing: billingLabel,
+    hargaBilling: totalMain,
+    totalSnack,
+    totalKeseluruhan: total
+  }
+
+  if(!rincian.length){
+    return [{
+      ...baseRow,
+      menu: '-',
+      hargaMenu: 0,
+      qtyMenu: 0,
+      totalHargaMenu: 0
+    }]
+  }
+
+  return rincian.map(item => ({
+    ...baseRow,
+    menu: item.nama,
+    hargaMenu: item.harga,
+    qtyMenu: item.qty,
+    totalHargaMenu: item.subtotal
+  }))
 }
 
-function rupiah(n){
-return new Intl.NumberFormat("id-ID").format(Number(n||0))
+function format(w){
+  let h=Math.floor(w/3600)
+  let m=Math.floor((w%3600)/60)
+  let s=w%60
+  return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')
+}
+function rupiah(n){ 
+  return new Intl.NumberFormat('id-ID').format(Number(n||0)) 
+}
+
+async function kirimTransaksiKeSpreadsheet(payloadRows){
+  if(!SHEET_WEBAPP_URL || SHEET_WEBAPP_URL.includes("PASTE_URL")) return
+
+  try{
+    await fetch(SHEET_WEBAPP_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ rows: payloadRows })
+    })
+  }catch(error){
+    console.error("Gagal kirim ke spreadsheet:", error)
+  }
 }
 
 function getStatusClass(p){
-if(!p.jalan && p.detik===0 && !p.endTime)return "pscardMain"
-if(p.jalan && p.detik>600)return "pscardJalan"
-if(p.detik>0 && p.detik<=600)return "pscardWarning"
-if(p.detik===0 && (!p.jalan || p.endTime))return "pscardHabis"
-return "pscardMain"
+  if(!p.jalan && p.detik===0 && !p.endTime) return 'pscardMain'
+  if(p.jalan && p.detik>600) return 'pscardJalan'
+  if(p.detik>0 && p.detik<=600) return 'pscardWarning'
+  if(p.detik===0 && (!p.jalan || p.endTime || p.selesaiNotif)) return 'pscardHabis'
+  return 'pscardMain'
 }
-
+function isPaketMabar(i){
+  return dataPS[i].billingMode==='paket_mabar'
+}
+function getBillingLabel(i){
+  if(isPaketMabar(i)) return paketMabar[psList[i].tipe].label
+  return Number(dataPS[i].jam) + ' Jam'
+}
+function getIncludedPackageItems(i){
+  if(!isPaketMabar(i)) return []
+  return [
+    {nama:'Chuba', qty:2, keterangan:'Include paket'},
+    {nama:(dataPS[i].paketDrink||'Kopi Liong')==='Nutrisari' ? 'Es Nutrisari' : 'Kopi Liong', qty:1, keterangan:'Include paket'}
+  ]
+}
 function hargaMain(i){
-let tipe=psList[i].tipe
-let jam=Number(dataPS[i].jam)
-if(tipe==="PS3") return hargaPS3[jam] || 0
-return hargaPS4[jam] || 0
+  const tipe=psList[i].tipe
+  if(isPaketMabar(i)) return paketMabar[tipe].harga
+  const jam=Number(dataPS[i].jam)
+  return tipe==='PS3' ? (hargaPS3[jam]||0) : (hargaPS4[jam]||0)
 }
-
 function snackTotal(snack){
-let total=0
-for(let i in snack){
-let m=menu[i]
-total += (m?.harga || 0) * snack[i]
+  let total=0
+  for(let i in snack){ total += (menu[i]?.harga || 0) * snack[i] }
+  return total
 }
-return total
-}
-
 function ensureNotificationPermission(){
-if(!("Notification" in window)) return
-if(Notification.permission==="default"){
-Notification.requestPermission().catch(()=>{})
+  if(!('Notification' in window)) return
+  if(Notification.permission==='default'){ Notification.requestPermission().catch(()=>{}) }
 }
-}
-
 function notifyUser(title, body){
-if(!("Notification" in window)) return
-if(Notification.permission==="granted"){
-try{
-new Notification(title,{body, icon:"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230b1020'/><text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' font-size='28' fill='%23ffffff'>PS</text></svg>"})
-}catch(e){}
-}
+  if(!('Notification' in window)) return
+  if(Notification.permission==='granted'){
+    try{ new Notification(title,{body}) }catch(e){}
+  }
 }
 
 function recalcRunningTimers(showRestoreNotification=false){
-const now=Date.now()
-
-dataPS.forEach((p,i)=>{
-if(p.jalan && p.endTime){
-const sisa = Math.max(0, Math.ceil((p.endTime - now)/1000))
-const sebelumnya = Number(p.detik || 0)
-p.detik = sisa
-p.lastTick = now
-
-if(sisa<=600 && sisa>0 && !p.peringatan){
-p.peringatan = true
-document.getElementById("alarm10")?.play?.()
-notifyUser("Peringatan 10 menit", psList[i].nama + " tinggal " + format(sisa))
+  const now=Date.now()
+  dataPS.forEach((p,i)=>{
+    if(p.jalan && p.endTime){
+      const sisa=Math.max(0, Math.ceil((p.endTime-now)/1000))
+      const sebelumnya=Number(p.detik||0)
+      p.detik=sisa
+      p.lastTick=now
+      if(sisa<=600 && sisa>0 && !p.peringatan){
+        p.peringatan=true
+        document.getElementById('alarm10')?.play?.()
+        notifyUser('Peringatan 10 menit', psList[i].nama + ' tinggal ' + format(sisa))
+      }
+      if(sisa===0){
+        p.jalan=false
+        p.endTime=null
+        if(!p.selesaiNotif){
+          p.selesaiNotif=true
+          document.getElementById('alarm0')?.play?.()
+          notifyUser('Waktu habis', psList[i].nama + ' atas nama ' + (p.nama || '-') + ' sudah selesai.')
+        }
+      }else if(showRestoreNotification && sebelumnya>0 && sebelumnya!==sisa){
+        notifyUser('Timer dipulihkan', psList[i].nama + ' kembali aktif dengan sisa ' + format(sisa))
+      }
+    }
+  })
 }
 
-if(sisa===0){
-p.jalan = false
-p.endTime = null
-if(!p.selesaiNotif){
-p.selesaiNotif = true
-document.getElementById("alarm0")?.play?.()
-notifyUser("Waktu habis", psList[i].nama + " atas nama " + (p.nama || "-") + " sudah selesai.")
-}
-}else if(showRestoreNotification && sebelumnya>0 && sebelumnya!==sisa){
-notifyUser("Timer dipulihkan", psList[i].nama + " kembali aktif dengan sisa " + format(sisa))
-}
-}
-})
-}
-
-function tambahSnack(ps,index){
-dataPS[ps].snack[index]=(dataPS[ps].snack[index]||0)+1
-save()
-render()
-}
-
-function hapusMenu(ps,index){
-if(dataPS[ps].snack[index]){
-delete dataPS[ps].snack[index]
-save()
-render()
-}
-}
-
+function tambahSnack(ps,index){ dataPS[ps].snack[index]=(dataPS[ps].snack[index]||0)+1; save(); render() }
+function hapusMenu(ps,index){ if(dataPS[ps].snack[index]){ delete dataPS[ps].snack[index]; save(); render() } }
 function kurangSnack(ps,index){
-if(dataPS[ps].snack[index]){
-dataPS[ps].snack[index]--
-if(dataPS[ps].snack[index]<=0) delete dataPS[ps].snack[index]
-}
-save()
-render()
+  if(dataPS[ps].snack[index]){
+    dataPS[ps].snack[index]--
+    if(dataPS[ps].snack[index]<=0) delete dataPS[ps].snack[index]
+  }
+  save(); render()
 }
 
 function start(i){
-ensureNotificationPermission()
-
-if(dataPS[i].detik===0){
-dataPS[i].detik=Number(dataPS[i].jam)*3600
+  ensureNotificationPermission()
+  if(isPaketMabar(i)){ dataPS[i].jam=3 }
+  if(dataPS[i].detik===0){ dataPS[i].detik=Number(dataPS[i].jam)*3600 }
+  dataPS[i].jalan=true
+  dataPS[i].peringatan=dataPS[i].detik<=600 && dataPS[i].detik>0
+  dataPS[i].selesaiNotif=false
+  dataPS[i].endTime=Date.now() + (Number(dataPS[i].detik)*1000)
+  dataPS[i].lastTick=Date.now()
+  save(); render()
 }
-
-dataPS[i].jalan=true
-dataPS[i].peringatan = dataPS[i].detik<=600 && dataPS[i].detik>0
-dataPS[i].selesaiNotif=false
-dataPS[i].endTime = Date.now() + (Number(dataPS[i].detik) * 1000)
-dataPS[i].lastTick = Date.now()
-
-save()
-render()
-}
-
 function pause(i){
-if(dataPS[i].jalan && dataPS[i].endTime){
-dataPS[i].detik = Math.max(0, Math.ceil((dataPS[i].endTime - Date.now())/1000))
-}
-dataPS[i].jalan=false
-dataPS[i].endTime=null
-dataPS[i].lastTick=Date.now()
-save()
-render()
-}
-
-function resetTimer(i){
-if(confirm("Reset timer " + psList[i].nama + " ?")){
-dataPS[i].detik=0
-dataPS[i].jalan=false
-dataPS[i].peringatan=false
-dataPS[i].selesaiNotif=false
-dataPS[i].endTime=null
-dataPS[i].lastTick=null
-dataPS[i].snack={}
-save()
-render()
-}
-}
-
-function tambah5menit(i){
-dataPS[i].detik += 300
-if(dataPS[i].jalan){
-dataPS[i].endTime = (dataPS[i].endTime || Date.now()) + 300*1000
-dataPS[i].selesaiNotif=false
-}
-save()
-render()
-}
-
-function tambah30(i){
-dataPS[i].detik += 1800
-if(dataPS[i].jalan){
-dataPS[i].endTime = (dataPS[i].endTime || Date.now()) + 1800*1000
-dataPS[i].selesaiNotif=false
-}
-save()
-render()
-}
-
-function tambah1jam(i){
-dataPS[i].detik += 3600
-if(dataPS[i].jalan){
-dataPS[i].endTime = (dataPS[i].endTime || Date.now()) + 3600*1000
-dataPS[i].selesaiNotif=false
-}
-save()
-render()
-}
-
-function bayar(i){
-let totalMain=hargaMain(i)
-let totalSnack=snackTotal(dataPS[i].snack)
-let total=totalMain+totalSnack
-
-pendapatan += total
-
-let now=new Date()
-
-transaksi.push({
-tanggal:now.toLocaleString(),
-createdAt:now.toISOString(),
-ps:psList[i].nama,
-nama:dataPS[i].nama,
-total
-})
-
-cetakStruk(i,totalMain,totalSnack,total)
-
-dataPS[i]={
-...createDefaultPS(psList[i]),
-jam:dataPS[i].jam
-}
-
-save()
-render()
-}
-
-function cetakStruk(i,main,snack,total){
-let rincian = menuRincian(dataPS[i].snack)
-let itemsHTML = rincian.length
-? rincian.map(item=>`<tr>
-<td>${item.nama}</td>
-<td>${item.qty}</td>
-<td>Rp${rupiah(item.subtotal)}</td>
-</tr>`).join("")
-: `<tr><td>-</td><td>0</td><td>Rp0</td></tr>`
-
-let w=window.open("","","width=380")
-w.document.write(`
-<html>
-<head>
-<title>Struk Rental PS</title>
-<style>
-body{font-family:Arial,sans-serif;padding:16px;color:#111}
-h3{margin:0 0 10px}
-table{width:100%;border-collapse:collapse;margin-top:10px}
-td,th{padding:7px 4px;border-bottom:1px solid #ddd;text-align:left;font-size:13px;vertical-align:top}
-.total{font-weight:700}
-</style>
-</head>
-<body>
-<h3>RENTAL MANTUL PS</h3>
-<div>${new Date().toLocaleString("id-ID")}</div>
-<hr>
-<div><strong>PS:</strong> ${psList[i].nama}</div>
-<div><strong>Nama:</strong> ${dataPS[i].nama || "-"}</div>
-<div><strong>Paket:</strong> ${dataPS[i].jam} Jam</div>
-
-<table>
-<tr><th colspan="3">Billing</th></tr>
-<tr><td colspan="2">Billing ${dataPS[i].jam} Jam</td><td>Rp${rupiah(main)}</td></tr>
-<tr><th>Nama menu</th><th>Qty</th><th>Subtotal</th></tr>
-${itemsHTML}
-<tr class="total"><td colspan="2">Total Menu</td><td>Rp${rupiah(snack)}</td></tr>
-<tr class="total"><td colspan="2">Grand Total</td><td>Rp${rupiah(total)}</td></tr>
-</table>
-</body>
-</html>
-`)
-w.document.close()
-w.focus()
-w.print()
-}
-
-function hapusRiwayat(){
-if(confirm("Hapus semua riwayat transaksi?")){
-transaksi=[]
-save()
-render()
-}
-}
-
-function hapusTransaksi(index){
-if(confirm("Hapus transaksi ini?")){
-  const trx = transaksi[index]
-  if(trx){
-    pendapatan -= Number(trx.total || 0)
-    if(pendapatan < 0) pendapatan = 0
+  if(dataPS[i].jalan && dataPS[i].endTime){
+    dataPS[i].detik=Math.max(0, Math.ceil((dataPS[i].endTime-Date.now())/1000))
   }
-  transaksi.splice(index,1)
+  dataPS[i].jalan=false
+  dataPS[i].endTime=null
+  dataPS[i].lastTick=Date.now()
+  save(); render()
+}
+function resetTimer(i){
+  if(confirm('Reset timer ' + psList[i].nama + ' ?')){
+    const currentJam = dataPS[i].jam
+    dataPS[i]={...createDefaultPS(), jam: currentJam}
+    save(); render()
+  }
+}
+function tambah5menit(i){ dataPS[i].detik += 300; if(dataPS[i].jalan){ dataPS[i].endTime=(dataPS[i].endTime||Date.now())+300000; dataPS[i].selesaiNotif=false } save(); render() }
+function tambah30(i){ dataPS[i].detik += 1800; if(dataPS[i].jalan){ dataPS[i].endTime=(dataPS[i].endTime||Date.now())+1800000; dataPS[i].selesaiNotif=false } save(); render() }
+function tambah1jam(i){ dataPS[i].detik += 3600; if(dataPS[i].jalan){ dataPS[i].endTime=(dataPS[i].endTime||Date.now())+3600000; dataPS[i].selesaiNotif=false } save(); render() }
+
+async function bayar(i){
+  const totalMain = hargaMain(i)
+  const totalSnack = snackTotal(dataPS[i].snack)
+  const total = totalMain + totalSnack
+
+  pendapatan += total
+
+  const now = new Date()
+
+  transaksi.unshift({
+    tanggal: now.toLocaleString("id-ID"),
+    createdAt: now.toISOString(),
+    ps: psList[i].nama,
+    nama: dataPS[i].nama,
+    billing: getBillingLabel(i),
+    hargaBilling: totalMain,
+    totalMenu: totalSnack,
+    total
+  })
+
+  /* 🔥 kirim ke spreadsheet */
+  const rows = buildSpreadsheetRows(i, totalMain, totalSnack, total)
+  await kirimTransaksiKeSpreadsheet(rows)
+
+  cetakStruk(i, totalMain, totalSnack, total)
+
+  dataPS[i] = {
+    ...createDefaultPS(),
+    jam: dataPS[i].jam,
+    billingMode: dataPS[i].billingMode,
+    paketDrink: dataPS[i].paketDrink
+  }
+
   save()
   render()
 }
+
+function cetakStruk(i,main,snack,total){
+  let rincian = menuRincian(dataPS[i].snack)
+  let includedItems = getIncludedPackageItems(i)
+  let itemsHTML = rincian.length
+  ? rincian.map(item=>`<tr><td>${item.nama}</td><td>${item.qty}</td><td>Rp${rupiah(item.subtotal)}</td></tr>`).join('')
+  : `<tr><td>-</td><td>0</td><td>Rp0</td></tr>`
+  let includedHTML = includedItems.length
+  ? includedItems.map(item=>`<tr><td>${item.nama}</td><td>${item.qty}</td><td>Include</td></tr>`).join('')
+  : ''
+
+  let w=window.open('','','width=380')
+  w.document.write(`
+  <html><head><title>Struk Rental PS</title>
+  <style>body{font-family:Arial,sans-serif;padding:16px;color:#111}h3{margin:0 0 10px}table{width:100%;border-collapse:collapse;margin-top:10px}td,th{padding:7px 4px;border-bottom:1px solid #ddd;text-align:left;font-size:13px;vertical-align:top}.total{font-weight:700}</style>
+  </head><body>
+  <h3>RENTAL MANTUL PS</h3>
+  <div>${new Date().toLocaleString('id-ID')}</div><hr>
+  <div><strong>PS:</strong> ${psList[i].nama}</div>
+  <div><strong>Nama:</strong> ${dataPS[i].nama || '-'}</div>
+  <div><strong>Paket:</strong> ${getBillingLabel(i)}</div>
+  <table>
+  <tr><th colspan="3">Billing</th></tr>
+  <tr><td colspan="2">${getBillingLabel(i)}</td><td>Rp${rupiah(main)}</td></tr>
+  ${includedHTML ? `<tr><th colspan="3">Bonus Paket</th></tr>${includedHTML}` : ''}
+  <tr><th>Nama menu</th><th>Qty</th><th>Subtotal</th></tr>
+  ${itemsHTML}
+  <tr class="total"><td colspan="2">Total Menu</td><td>Rp${rupiah(snack)}</td></tr>
+  <tr class="total"><td colspan="2">Grand Total</td><td>Rp${rupiah(total)}</td></tr>
+  </table></body></html>`)
+  w.document.close(); w.focus(); w.print()
 }
 
-function resetPendapatan(){
-if(confirm("Reset total pendapatan?")){
-pendapatan=0
-save()
-render()
+function hapusRiwayat(){
+  if(confirm('Hapus semua riwayat transaksi?')){
+    transaksi=[]
+    pendapatan=0
+    save(); render()
+  }
 }
+function hapusTransaksi(index){
+  if(confirm('Hapus transaksi ini?')){
+    const trx=transaksi[index]
+    if(trx){ pendapatan -= Number(trx.total||0); if(pendapatan<0) pendapatan=0 }
+    transaksi.splice(index,1)
+    save(); render()
+  }
+}
+function resetPendapatan(){
+  if(confirm('Reset total pendapatan?')){ pendapatan=0; save(); render() }
 }
 
 function formatDateKey(date){
-const d = new Date(date)
-return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")
+  const d = new Date(date)
+  return d.getFullYear() + "-" +
+    String(d.getMonth()+1).padStart(2,"0") + "-" +
+    String(d.getDate()).padStart(2,"0")
 }
 
 function formatMonthKey(date){
-const d = new Date(date)
-return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")
+  const d = new Date(date)
+  return d.getFullYear() + "-" +
+    String(d.getMonth()+1).padStart(2,"0")
+}
+
+function formatYearKey(date){
+  const d = new Date(date)
+  return String(d.getFullYear())
 }
 
 function normalizeTransDate(item){
-if(item.createdAt) return new Date(item.createdAt)
-return new Date(item.tanggal)
+  return item.createdAt ? new Date(item.createdAt) : new Date(item.tanggal)
 }
+
+function getIncomeSummary(){
+  const now = new Date()
+
+  const daily = transaksi.filter(t=>{
+    return new Date(t.createdAt).toDateString() === now.toDateString()
+  }).reduce((a,b)=>a+Number(b.total||0),0)
+
+  const monthly = transaksi.filter(t=>{
+    let d = new Date(t.createdAt)
+    return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear()
+  }).reduce((a,b)=>a+Number(b.total||0),0)
+
+  const yearly = transaksi.filter(t=>{
+    let d = new Date(t.createdAt)
+    return d.getFullYear()===now.getFullYear()
+  }).reduce((a,b)=>a+Number(b.total||0),0)
+
+  return {daily, monthly, yearly}
+
+  const incomeDaily = transaksi
+    .filter(t => formatDateKey(normalizeTransDate(t)) === todayKey)
+    .reduce((sum, t) => sum + Number(t.total || 0), 0)
+
+  const incomeMonthly = transaksi
+    .filter(t => formatMonthKey(normalizeTransDate(t)) === monthKey)
+    .reduce((sum, t) => sum + Number(t.total || 0), 0)
+
+  const incomeYearly = transaksi
+    .filter(t => formatYearKey(normalizeTransDate(t)) === yearKey)
+    .reduce((sum, t) => sum + Number(t.total || 0), 0)
+
+  return {
+    daily: incomeDaily,
+    monthly: incomeMonthly,
+    yearly: incomeYearly
+  }
+}
+
+function formatMonthKey(date){ const d=new Date(date); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0') }
+function normalizeTransDate(item){ return item.createdAt ? new Date(item.createdAt) : new Date(item.tanggal) }
 
 function getPeriodTotals(){
-const now = new Date()
-const dayKey = formatDateKey(now)
-const monthKey = formatMonthKey(now)
-const yearKey = String(now.getFullYear())
-
-const incomeDay = transaksi.filter(t=>formatDateKey(normalizeTransDate(t))===dayKey).reduce((a,b)=>a+Number(b.total||0),0)
-const incomeMonth = transaksi.filter(t=>formatMonthKey(normalizeTransDate(t))===monthKey).reduce((a,b)=>a+Number(b.total||0),0)
-const incomeYear = transaksi.filter(t=>String(normalizeTransDate(t).getFullYear())===yearKey).reduce((a,b)=>a+Number(b.total||0),0)
-
-const expenseDay = pengeluaran.filter(t=>formatDateKey(t.createdAt||t.tanggal)===dayKey).reduce((a,b)=>a+Number(b.amount||0),0)
-const expenseMonth = pengeluaran.filter(t=>formatMonthKey(t.createdAt||t.tanggal)===monthKey).reduce((a,b)=>a+Number(b.amount||0),0)
-const expenseYear = pengeluaran.filter(t=>String(new Date(t.createdAt||t.tanggal).getFullYear())===yearKey).reduce((a,b)=>a+Number(b.amount||0),0)
-
-return {
-  day:{income:incomeDay, expense:expenseDay, net:incomeDay-expenseDay},
-  month:{income:incomeMonth, expense:expenseMonth, net:incomeMonth-expenseMonth},
-  year:{income:incomeYear, expense:expenseYear, net:incomeYear-expenseYear}
-}
+  const now=new Date()
+  const dayKey=formatDateKey(now)
+  const monthKey=formatMonthKey(now)
+  const yearKey=String(now.getFullYear())
+  const incomeDay=transaksi.filter(t=>formatDateKey(normalizeTransDate(t))===dayKey).reduce((a,b)=>a+Number(b.total||0),0)
+  const incomeMonth=transaksi.filter(t=>formatMonthKey(normalizeTransDate(t))===monthKey).reduce((a,b)=>a+Number(b.total||0),0)
+  const incomeYear=transaksi.filter(t=>String(normalizeTransDate(t).getFullYear())===yearKey).reduce((a,b)=>a+Number(b.total||0),0)
+  const expenseDay=pengeluaran.filter(t=>formatDateKey(t.createdAt||t.tanggal)===dayKey).reduce((a,b)=>a+Number(b.amount||0),0)
+  const expenseMonth=pengeluaran.filter(t=>formatMonthKey(t.createdAt||t.tanggal)===monthKey).reduce((a,b)=>a+Number(b.amount||0),0)
+  const expenseYear=pengeluaran.filter(t=>String(new Date(t.createdAt||t.tanggal).getFullYear())===yearKey).reduce((a,b)=>a+Number(b.amount||0),0)
+  return {
+    day:{income:incomeDay, expense:expenseDay, net:incomeDay-expenseDay},
+    month:{income:incomeMonth, expense:expenseMonth, net:incomeMonth-expenseMonth},
+    year:{income:incomeYear, expense:expenseYear, net:incomeYear-expenseYear}
+  }
 }
 
 function getIncomeLast7Days(){
-let arr=[]
-for(let i=6;i>=0;i--){
-  const d = new Date()
-  d.setDate(d.getDate()-i)
-  const key = formatDateKey(d)
-  const value = transaksi.filter(t=>formatDateKey(normalizeTransDate(t))===key).reduce((a,b)=>a+Number(b.total||0),0)
-  arr.push({
-    label: d.toLocaleDateString("id-ID",{weekday:"short"}),
-    dateLabel: d.toLocaleDateString("id-ID",{day:"2-digit",month:"2-digit"}),
-    value
-  })
-}
-return arr
+  let arr=[]
+  for(let i=6;i>=0;i--){
+    const d=new Date()
+    d.setDate(d.getDate()-i)
+    const key=formatDateKey(d)
+    const value=transaksi.filter(t=>formatDateKey(normalizeTransDate(t))===key).reduce((a,b)=>a+Number(b.total||0),0)
+    arr.push({label:d.toLocaleDateString('id-ID',{weekday:'short'}),dateLabel:d.toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit'}),value})
+  }
+  return arr
 }
 
 function addExpense(){
-const name=document.getElementById("expenseName")?.value?.trim()
-const category=document.getElementById("expenseCategory")?.value || "Lainnya"
-const amount=Number(document.getElementById("expenseAmount")?.value || 0)
-
-if(!name || amount<=0){
-alert("Isi nama dan nominal pengeluaran dulu.")
-return
+  const name=document.getElementById('expenseName')?.value?.trim()
+  const category=document.getElementById('expenseCategory')?.value || 'Lainnya'
+  const amount=Number(document.getElementById('expenseAmount')?.value || 0)
+  if(!name || amount<=0){ alert('Isi nama dan nominal pengeluaran dulu.'); return }
+  pengeluaran.unshift({nama:name,kategori:category,amount,tanggal:new Date().toLocaleString('id-ID'),createdAt:new Date().toISOString()})
+  document.getElementById('expenseName').value=''
+  document.getElementById('expenseAmount').value=''
+  save(); render()
 }
-
-pengeluaran.unshift({
-  nama:name,
-  kategori:category,
-  amount,
-  tanggal:new Date().toLocaleString("id-ID"),
-  createdAt:new Date().toISOString()
-})
-
-document.getElementById("expenseName").value=""
-document.getElementById("expenseAmount").value=""
-save()
-render()
-}
-
-function deleteExpense(index){
-if(!confirm("Hapus pengeluaran ini?")) return
-pengeluaran.splice(index,1)
-save()
-render()
-}
+function deleteExpense(index){ if(confirm('Hapus pengeluaran ini?')){ pengeluaran.splice(index,1); save(); render() } }
 
 function showSection(section){
-document.querySelectorAll(".pageSection").forEach(el=>el.classList.remove("active"))
-document.querySelectorAll(".nav-link").forEach(el=>el.classList.remove("active"))
-
-const map = {home:["homeSection","navHome"], timer:["timerSection","navTimer"], rekap:["rekapSection","navRekap"]}
-const ids = map[section]
-if(ids){
-  document.getElementById(ids[0])?.classList.add("active")
-  document.getElementById(ids[1])?.classList.add("active")
-  window.scrollTo({top:0,behavior:"smooth"})
+  document.querySelectorAll('.pageSection').forEach(el=>el.classList.remove('active'))
+  document.querySelectorAll('.nav-link').forEach(el=>{
+    if(el.id==='compactBtn') return
+    el.classList.remove('active')
+  })
+  const map={home:['homeSection','navHome'], timer:['timerSection','navTimer'], rekap:['rekapSection','navRekap']}
+  const ids=map[section]
+  if(ids){
+    document.getElementById(ids[0])?.classList.add('active')
+    document.getElementById(ids[1])?.classList.add('active')
+    window.scrollTo({top:0, behavior:'smooth'})
+  }
 }
+
+function applyCompactMode(){
+  const isCompact=localStorage.getItem('compactMode')==='true'
+  document.body.classList.toggle('compact', isCompact)
+  const btn=document.getElementById('compactBtn')
+  if(btn){
+    btn.textContent='Mode Compact: ' + (isCompact ? 'ON' : 'OFF')
+    btn.classList.toggle('active', isCompact)
+  }
+}
+function toggleCompactMode(){
+  const current=localStorage.getItem('compactMode')==='true'
+  localStorage.setItem('compactMode', String(!current))
+  applyCompactMode()
 }
 
 function renderHome(){
-const statsEl=document.getElementById("homeStats")
-const sessionsActive=dataPS.filter(p=>p.jalan).length
-const incomeAll=transaksi.reduce((a,b)=>a+Number(b.total||0),0)
-const expenseAll=pengeluaran.reduce((a,b)=>a+Number(b.amount||0),0)
-const netAll=incomeAll-expenseAll
+  const statsEl=document.getElementById('homeStats')
+  const chartEl=document.getElementById('incomeChart')
+  const overview=document.getElementById('overviewBreakdown')
+  const activeEl=document.getElementById('activeSessions')
+  const recentEl=document.getElementById('recentTransactionsHome')
 
-if(statsEl){
-statsEl.innerHTML=`
-<div class="statCard"><div class="statLabel">Total Income</div><div class="statValue">Rp ${rupiah(incomeAll)}</div></div>
-<div class="statCard"><div class="statLabel">Total Pengeluaran</div><div class="statValue">Rp ${rupiah(expenseAll)}</div></div>
-<div class="statCard"><div class="statLabel">Laba Bersih</div><div class="statValue">Rp ${rupiah(netAll)}</div></div>
-<div class="statCard"><div class="statLabel">Sesi Aktif</div><div class="statValue">${sessionsActive}</div></div>`
-}
+  const sessionsActive=dataPS.filter(p=>p.jalan).length
+  const incomeAll=transaksi.reduce((a,b)=>a+Number(b.total||0),0)
+  const expenseAll=pengeluaran.reduce((a,b)=>a+Number(b.amount||0),0)
+  const netAll=incomeAll-expenseAll
 
-const chartEl=document.getElementById("incomeChart")
-if(chartEl){
-  const data=getIncomeLast7Days()
-  const max=Math.max(...data.map(x=>x.value),1)
-  chartEl.innerHTML=data.map(item=>`
-    <div class="barItem">
-      <div class="barNumber">Rp ${rupiah(item.value)}</div>
-      <div class="barValue" style="height:${Math.max(14, Math.round((item.value/max)*170))}px"></div>
-      <div class="barLabel">${item.label}<br>${item.dateLabel}</div>
-    </div>
-  `).join("")
-}
+  if(statsEl){
+    statsEl.innerHTML=`
+      <div class="statCard"><div class="statLabel">Total Income</div><div class="statValue">Rp ${rupiah(incomeAll)}</div></div>
+      <div class="statCard"><div class="statLabel">Total Pengeluaran</div><div class="statValue">Rp ${rupiah(expenseAll)}</div></div>
+      <div class="statCard"><div class="statLabel">Laba Bersih</div><div class="statValue">Rp ${rupiah(netAll)}</div></div>
+      <div class="statCard"><div class="statLabel">Sesi Aktif</div><div class="statValue">${sessionsActive}</div></div>`
+  }
 
-const p=getPeriodTotals()
-const overview=document.getElementById("overviewBreakdown")
-if(overview){
-overview.innerHTML=`
-<div class="breakdownRow"><span>Income Hari Ini</span><strong>Rp ${rupiah(p.day.income)}</strong></div>
-<div class="breakdownRow"><span>Pengeluaran Hari Ini</span><strong>Rp ${rupiah(p.day.expense)}</strong></div>
-<div class="breakdownRow"><span>Laba Bersih Bulan Ini</span><strong>Rp ${rupiah(p.month.net)}</strong></div>
-<div class="breakdownRow"><span>Laba Bersih Tahun Ini</span><strong>Rp ${rupiah(p.year.net)}</strong></div>`
-}
+  if(chartEl){
+    const data=getIncomeLast7Days()
+    const max=Math.max(...data.map(x=>x.value),1)
+    chartEl.innerHTML=data.map(item=>`
+      <div class="barItem">
+        <div class="barNumber">Rp ${rupiah(item.value)}</div>
+        <div class="barValue" style="height:${Math.max(14, Math.round((item.value/max)*170))}px"></div>
+        <div class="barLabel">${item.label}<br>${item.dateLabel}</div>
+      </div>`).join('')
+  }
 
-const activeEl=document.getElementById("activeSessions")
-if(activeEl){
-  const aktif=dataPS.map((p,idx)=>({...p, ps:psList[idx]})).filter(x=>x.jalan)
-  activeEl.innerHTML=aktif.length ? aktif.map(x=>`
-    <div class="simpleRow">
-      <div><strong>${x.ps.nama} (${x.ps.tipe})</strong><small>${x.nama || "Tanpa nama pemain"}</small></div>
-      <strong>${format(Number(x.detik||0))}</strong>
-    </div>
-  `).join("") : '<div class="simpleRow"><div><strong>Tidak ada sesi aktif</strong><small>Semua timer sedang berhenti.</small></div><strong>-</strong></div>'
-}
+  if(overview){
+    const p=getPeriodTotals()
+    overview.innerHTML=`
+      <div class="breakdownRow"><span>Income Hari Ini</span><strong>Rp ${rupiah(p.day.income)}</strong></div>
+      <div class="breakdownRow"><span>Pengeluaran Hari Ini</span><strong>Rp ${rupiah(p.day.expense)}</strong></div>
+      <div class="breakdownRow"><span>Laba Bersih Bulan Ini</span><strong>Rp ${rupiah(p.month.net)}</strong></div>
+      <div class="breakdownRow"><span>Laba Bersih Tahun Ini</span><strong>Rp ${rupiah(p.year.net)}</strong></div>`
+  }
 
-const recentEl=document.getElementById("recentTransactionsHome")
-if(recentEl){
-  recentEl.innerHTML=transaksi.length ? transaksi.slice(0,5).map(t=>`
-    <div class="simpleRow">
-      <div><strong>${t.ps}</strong><small>${t.nama || "-"} • ${t.tanggal}</small></div>
-      <strong>Rp ${rupiah(t.total)}</strong>
-    </div>
-  `).join("") : '<div class="simpleRow"><div><strong>Belum ada transaksi</strong><small>Riwayat income akan tampil di sini.</small></div><strong>-</strong></div>'
-}
+  if(activeEl){
+    const aktif=dataPS.map((p,idx)=>({...p, ps:psList[idx]})).filter(x=>x.jalan)
+    activeEl.innerHTML=aktif.length ? aktif.map(x=>`
+      <div class="simpleRow">
+        <div><strong>${x.ps.nama} (${x.ps.tipe})</strong><small>${x.nama || 'Tanpa nama pemain'}</small></div>
+        <strong>${format(Number(x.detik||0))}</strong>
+      </div>`).join('') : '<div class="simpleRow"><div><strong>Tidak ada sesi aktif</strong><small>Semua timer sedang berhenti.</small></div><strong>-</strong></div>'
+  }
+
+  if(recentEl){
+    recentEl.innerHTML=transaksi.length ? transaksi.slice(0,5).map(t=>`
+      <div class="simpleRow">
+        <div><strong>${t.ps}</strong><small>${t.nama || '-'} • ${t.tanggal}</small></div>
+        <strong>Rp ${rupiah(t.total)}</strong>
+      </div>`).join('') : '<div class="simpleRow"><div><strong>Belum ada transaksi</strong><small>Riwayat income akan tampil di sini.</small></div><strong>-</strong></div>'
+  }
 }
 
 function renderRekap(){
-const periods=getPeriodTotals()
-
-const cards=document.getElementById("rekapCards")
-if(cards){
-cards.innerHTML=`
-<div class="rekapCard">
-  <h4>Harian</h4>
-  <div class="rekapMeta"><span>Income</span><strong>Rp ${rupiah(periods.day.income)}</strong></div>
-  <div class="rekapMeta"><span>Pengeluaran</span><strong>Rp ${rupiah(periods.day.expense)}</strong></div>
-  <div class="rekapMeta"><span>Laba Bersih</span><strong>Rp ${rupiah(periods.day.net)}</strong></div>
-</div>
-<div class="rekapCard">
-  <h4>Bulanan</h4>
-  <div class="rekapMeta"><span>Income</span><strong>Rp ${rupiah(periods.month.income)}</strong></div>
-  <div class="rekapMeta"><span>Pengeluaran</span><strong>Rp ${rupiah(periods.month.expense)}</strong></div>
-  <div class="rekapMeta"><span>Laba Bersih</span><strong>Rp ${rupiah(periods.month.net)}</strong></div>
-</div>
-<div class="rekapCard">
-  <h4>Tahunan</h4>
-  <div class="rekapMeta"><span>Income</span><strong>Rp ${rupiah(periods.year.income)}</strong></div>
-  <div class="rekapMeta"><span>Pengeluaran</span><strong>Rp ${rupiah(periods.year.expense)}</strong></div>
-  <div class="rekapMeta"><span>Laba Bersih</span><strong>Rp ${rupiah(periods.year.net)}</strong></div>
-</div>`
+  const periods=getPeriodTotals()
+  const cards=document.getElementById('rekapCards')
+  if(cards){
+    cards.innerHTML=`
+    <div class="rekapCard"><h4>Harian</h4><div class="rekapMeta"><span>Income</span><strong>Rp ${rupiah(periods.day.income)}</strong></div><div class="rekapMeta"><span>Pengeluaran</span><strong>Rp ${rupiah(periods.day.expense)}</strong></div><div class="rekapMeta"><span>Laba Bersih</span><strong>Rp ${rupiah(periods.day.net)}</strong></div></div>
+    <div class="rekapCard"><h4>Bulanan</h4><div class="rekapMeta"><span>Income</span><strong>Rp ${rupiah(periods.month.income)}</strong></div><div class="rekapMeta"><span>Pengeluaran</span><strong>Rp ${rupiah(periods.month.expense)}</strong></div><div class="rekapMeta"><span>Laba Bersih</span><strong>Rp ${rupiah(periods.month.net)}</strong></div></div>
+    <div class="rekapCard"><h4>Tahunan</h4><div class="rekapMeta"><span>Income</span><strong>Rp ${rupiah(periods.year.income)}</strong></div><div class="rekapMeta"><span>Pengeluaran</span><strong>Rp ${rupiah(periods.year.expense)}</strong></div><div class="rekapMeta"><span>Laba Bersih</span><strong>Rp ${rupiah(periods.year.net)}</strong></div></div>`
+  }
+  const table=document.getElementById('rekapTable')
+  if(table){
+    table.innerHTML=`
+    <tr><td>Harian</td><td>Rp ${rupiah(periods.day.income)}</td><td>Rp ${rupiah(periods.day.expense)}</td><td>Rp ${rupiah(periods.day.net)}</td></tr>
+    <tr><td>Bulanan</td><td>Rp ${rupiah(periods.month.income)}</td><td>Rp ${rupiah(periods.month.expense)}</td><td>Rp ${rupiah(periods.month.net)}</td></tr>
+    <tr><td>Tahunan</td><td>Rp ${rupiah(periods.year.income)}</td><td>Rp ${rupiah(periods.year.expense)}</td><td>Rp ${rupiah(periods.year.net)}</td></tr>`
+  }
+  const expHist=document.getElementById('expenseHistory')
+  if(expHist){
+    expHist.innerHTML=pengeluaran.length ? pengeluaran.slice(0,20).map((e,idx)=>`
+    <tr><td>${e.tanggal}</td><td>${e.kategori}</td><td>${e.nama}</td><td>Rp ${rupiah(e.amount)}</td><td><button class="reset" onclick="deleteExpense(${idx})">Hapus</button></td></tr>`).join('') : '<tr><td colspan="5">Belum ada data pengeluaran.</td></tr>'
+  }
 }
-
-const table=document.getElementById("rekapTable")
-if(table){
-table.innerHTML=`
-<tr><td>Harian</td><td>Rp ${rupiah(periods.day.income)}</td><td>Rp ${rupiah(periods.day.expense)}</td><td>Rp ${rupiah(periods.day.net)}</td></tr>
-<tr><td>Bulanan</td><td>Rp ${rupiah(periods.month.income)}</td><td>Rp ${rupiah(periods.month.expense)}</td><td>Rp ${rupiah(periods.month.net)}</td></tr>
-<tr><td>Tahunan</td><td>Rp ${rupiah(periods.year.income)}</td><td>Rp ${rupiah(periods.year.expense)}</td><td>Rp ${rupiah(periods.year.net)}</td></tr>`
-}
-
-const expHist=document.getElementById("expenseHistory")
-if(expHist){
-expHist.innerHTML = pengeluaran.length ? pengeluaran.slice(0,20).map((e,idx)=>`
-<tr>
-<td>${e.tanggal}</td>
-<td>${e.kategori}</td>
-<td>${e.nama}</td>
-<td>Rp ${rupiah(e.amount)}</td>
-<td><button class="reset" onclick="deleteExpense(${idx})">Hapus</button></td>
-</tr>`).join("") : '<tr><td colspan="5">Belum ada data pengeluaran.</td></tr>'
-}
-}
-
 
 function menuRincian(snack){
-let items=[]
-for(let i in snack){
-let qty=Number(snack[i]||0)
-if(qty>0){
-let m=menu[i]
-items.push({
-nama:m.nama,
-kategori:m.kategori || "Lainnya",
-qty,
-harga:m.harga,
-subtotal:m.harga*qty
-})
+  let items=[]
+  for(let i in snack){
+    let qty=Number(snack[i]||0)
+    if(qty>0){
+      let m=menu[i]
+      items.push({nama:m.nama,kategori:m.kategori||'Lainnya',qty,harga:m.harga,subtotal:m.harga*qty})
+    }
+  }
+  return items
 }
+
+function setBillingMode(i, mode){
+  dataPS[i].billingMode=mode
+  if(mode==='paket_mabar'){
+    dataPS[i].jam=3
+  }
+  if(!dataPS[i].jalan){
+    dataPS[i].detik=0
+  }
+  save(); render()
 }
-return items
+function setPaketDrink(i, drink){
+  dataPS[i].paketDrink=drink
+  save(); render()
 }
 
 function tambahMenu(ps){
-let select=document.getElementById("menuSelect"+ps)
-let qtyInput=document.getElementById("menuQtyInput"+ps)
-if(!select) return
-
-let idx=select.value
-if(idx==="" || idx===null) return
-
-let qty=Math.max(1, Number(qtyInput?.value || 1))
-dataPS[ps].snack[idx]=(dataPS[ps].snack[idx]||0)+qty
-
-if(qtyInput) qtyInput.value=1
-select.value=""
-save()
-render()
+  let select=document.getElementById('menuSelect'+ps)
+  let qtyInput=document.getElementById('menuQtyInput'+ps)
+  if(!select) return
+  let idx=select.value
+  if(idx==='' || idx===null) return
+  let qty=Math.max(1, Number(qtyInput?.value || 1))
+  dataPS[ps].snack[idx]=(dataPS[ps].snack[idx]||0)+qty
+  if(qtyInput) qtyInput.value=1
+  select.value=''
+  save(); render()
 }
 
 function countSummary(){
-let aktif = dataPS.filter(p=>p.jalan).length
-let warning = dataPS.filter(p=>p.detik>0 && p.detik<=600).length
-let omzet = dataPS.reduce((a,p,idx)=>a+hargaMain(idx)+snackTotal(p.snack),0)
-return {aktif,warning,omzet}
+  let aktif=dataPS.filter(p=>p.jalan).length
+  let warning=dataPS.filter(p=>p.detik>0 && p.detik<=600).length
+  let omzet=dataPS.reduce((a,p,idx)=>a+hargaMain(idx)+snackTotal(p.snack),0)
+  return {aktif,warning,omzet}
 }
-
 function renderSummary(){
-let el=document.getElementById("summary")
-if(!el) return
-let s=countSummary()
-el.innerHTML=`
-<div class="summary-card">
-<div class="summary-label">Sedang Main</div>
-<div class="summary-value">${s.aktif}</div>
-</div>
-<div class="summary-card">
-<div class="summary-label">Segera Habis</div>
-<div class="summary-value">${s.warning}</div>
-</div>
-<div class="summary-card">
-<div class="summary-label">Estimasi Tagihan</div>
-<div class="summary-value">Rp ${rupiah(s.omzet)}</div>
-</div>`
-}
+  const el = document.getElementById("summary")
+  if(!el) return
 
+  const s = countSummary()
+  const income = getIncomeSummary()
+
+  el.innerHTML = `
+  <div class="summary-card">
+    <div class="summary-label">Sedang Main</div>
+    <div class="summary-value">${s.aktif}</div>
+  </div>
+  <div class="summary-card">
+    <div class="summary-label">Segera Habis</div>
+    <div class="summary-value">${s.warning}</div>
+  </div>
+  <div class="summary-card">
+  <div class="summary-label">Income Harian</div>
+  <div class="summary-value">Rp ${rupiah(income.daily)}</div>
+</div>
+<div class="summary-card">
+  <div class="summary-label">Income Bulanan</div>
+  <div class="summary-value">Rp ${rupiah(income.monthly)}</div>
+</div>
+<div class="summary-card">
+  <div class="summary-label">Income Tahunan</div>
+  <div class="summary-value">Rp ${rupiah(income.yearly)}</div>
+</div>
+  <div class="summary-card">
+    <div class="summary-label">Estimasi Tagihan</div>
+    <div class="summary-value">Rp ${rupiah(s.omzet)}</div>
+  </div>
+  `
+}
 function getBadge(p){
-if(p.detik<=0 && !p.jalan && p.selesaiNotif) return '<span class="badge badgeOver">Waktu Habis</span>'
-if(p.detik>0 && p.detik<=600) return '<span class="badge badgeWarn">10 Menit Lagi</span>'
-if(p.jalan) return '<span class="badge badgePlay">Sedang Main</span>'
-return '<span class="badge badgeIdle">Siap Digunakan</span>'
+  if(p.detik<=0 && !p.jalan && p.selesaiNotif) return '<span class="badge badgeOver">Waktu Habis</span>'
+  if(p.detik>0 && p.detik<=600) return '<span class="badge badgeWarn">10 Menit Lagi</span>'
+  if(p.jalan) return '<span class="badge badgePlay">Sedang Main</span>'
+  return '<span class="badge badgeIdle">Siap Digunakan</span>'
 }
 
 function render(){
-let html=""
+  let html=''
+  psList.forEach((ps,i)=>{
+    let p=dataPS[i]
+    let snackHTML=''
+    menu.forEach((m,index)=>{
+      let qty=p.snack[index]||0
+      if(qty>0){
+        snackHTML += `
+        <div class="menuRow">
+          <div class="menuName">${m.nama}</div>
+          <div class="menuPrice">Rp ${rupiah(m.harga)} x ${qty}</div>
+          <div class="menuQty">
+            <button onclick="kurangSnack(${i},${index})">-</button>
+            <span>${qty}</span>
+            <button onclick="tambahSnack(${i},${index})">+</button>
+            <button class="reset" onclick="hapusMenu(${i},${index})">Hapus</button>
+          </div>
+        </div>`
+      }
+    })
+    if(!snackHTML){ snackHTML='<div class="menuEmpty">Belum ada menu dipilih.</div>' }
+    let includedItems=getIncludedPackageItems(i)
+    let includedHTML=includedItems.length
+      ? `<div class="menuEmpty">Bonus paket: ${includedItems.map(item=>`${item.qty} ${item.nama}`).join(' + ')}</div>`
+      : ''
+    let total=hargaMain(i)+snackTotal(p.snack)
+    html += `
+    <div class="pscard ${getStatusClass(p)}">
+      <div class="psname">${ps.nama} (${ps.tipe}) ${getBadge(p)}</div>
+      <input placeholder="Nama pemain" value="${p.nama}" oninput="dataPS[${i}].nama=this.value;save()">
+      <select onchange="setBillingMode(${i}, this.value)">
+        <option value="reguler" ${p.billingMode==='reguler'?'selected':''}>Reguler</option>
+        <option value="paket_mabar" ${p.billingMode==='paket_mabar'?'selected':''}>Paket Mabar 3 Jam</option>
+      </select>
+      ${p.billingMode==='reguler' ? `
+      <select onchange="dataPS[${i}].jam=Number(this.value); if(!dataPS[${i}].jalan){ dataPS[${i}].detik=0; } save(); render();">
+        <option value="1" ${Number(p.jam)==1?'selected':''}>1 Jam</option>
+        <option value="2" ${Number(p.jam)==2?'selected':''}>2 Jam</option>
+        <option value="3" ${Number(p.jam)==3?'selected':''}>3 Jam</option>
+        <option value="4" ${Number(p.jam)==4?'selected':''}>4 Jam</option>
+        <option value="5" ${Number(p.jam)==5?'selected':''}>5 Jam</option>
+        <option value="6" ${Number(p.jam)==6?'selected':''}>6 Jam</option>
+        <option value="12" ${Number(p.jam)==12?'selected':''}>12 Jam</option>
+        <option value="24" ${Number(p.jam)==24?'selected':''}>24 Jam</option>
+      </select>` : `
+      <div class="menuEmpty">${paketMabar[ps.tipe].label} • Rp ${rupiah(paketMabar[ps.tipe].harga)}</div>
+      <select onchange="setPaketDrink(${i}, this.value)">
+        <option value="Kopi Liong" ${(p.paketDrink||'Kopi Liong')==='Kopi Liong'?'selected':''}>Bonus minum: Kopi Liong</option>
+        <option value="Nutrisari" ${(p.paketDrink||'Kopi Liong')==='Nutrisari'?'selected':''}>Bonus minum: Es Nutrisari</option>
+      </select>`}
+      <div class="meta"><span>Status sesi</span><span>${p.jalan ? 'Timer aktif' : (p.selesaiNotif ? 'Sesi selesai' : 'Belum dimulai')}</span></div>
+      <div id="timer${i}" class="timer ${p.detik<=600 && p.detik>0 ? 'timerWarning' : ''}">${format(Number(p.detik||0))}</div>
+      <div class="harga"><span>Total sementara</span><b>Rp ${rupiah(total)}</b></div>
+      <div class="menuSection">
+        <div class="menuTitle">Pilih Menu</div>
+        <div class="menuDropdownRow">
+          <select id="menuSelect${i}" class="menuDropdownSelect">
+            <option value="">Pilih menu...</option>
+            ${menu.map((m,idx)=>`<option value="${idx}">${m.nama} • ${m.kategori} • Rp ${rupiah(m.harga)}</option>`).join('')}
+          </select>
+          <input id="menuQtyInput${i}" class="menuQtyInput" type="number" min="1" value="1">
+          <button class="add" onclick="tambahMenu(${i})">Tambah</button>
+        </div>
+        ${includedHTML}
+        <div class="menuList">${snackHTML}</div>
+        <div class="billBreakdown">
+          <div class="billLine"><span>${getBillingLabel(i)}</span><span>Rp ${rupiah(hargaMain(i))}</span></div>
+          <div class="billLine"><span>Total Menu</span><span>Rp ${rupiah(snackTotal(p.snack))}</span></div>
+          <div class="billLine"><span><strong>Grand Total</strong></span><span><strong>Rp ${rupiah(total)}</strong></span></div>
+        </div>
+      </div>
+      <div class="controls" style="margin-top:18px;">
+        <button class="start" onclick="start(${i})">Start</button>
+        <button class="pause" onclick="pause(${i})">Pause</button>
+        <button class="add" onclick="tambah5menit(${i})">+5m</button>
+        <button class="add" onclick="tambah30(${i})">+30m</button>
+        <button class="add" onclick="tambah1jam(${i})">+1h</button>
+        <button class="reset" onclick="resetTimer(${i})">Reset</button>
+        <button class="start" onclick="bayar(${i})">Bayar</button>
+      </div>
+    </div>`
+  })
 
-psList.forEach((ps,i)=>{
-let p=dataPS[i]
-let snackHTML=""
-
-menu.forEach((m,index)=>{
-let qty=p.snack[index]||0
-if(qty>0){
-snackHTML += `
-<div class="menuRow">
-<div class="menuName">${m.nama}</div>
-<div class="menuPrice">Rp ${rupiah(m.harga)} x ${qty}</div>
-<div class="menuQty">
-<button onclick="kurangSnack(${i},${index})">-</button>
-<span>${qty}</span>
-<button onclick="tambahSnack(${i},${index})">+</button>
-<button class="reset" onclick="hapusMenu(${i},${index})">Hapus</button>
-</div>
-</div>`
-}
-})
-
-if(!snackHTML){
-snackHTML = '<div class="menuEmpty">Belum ada menu dipilih.</div>'
-}
-
-let total=hargaMain(i)+snackTotal(p.snack)
-
-html += `
-<div class="pscard ${getStatusClass(p)}">
-<div class="psname">${ps.nama} (${ps.tipe}) ${getBadge(p)}</div>
-
-<input placeholder="Nama pemain" value="${p.nama}" oninput="dataPS[${i}].nama=this.value;save()">
-
-<select onchange="dataPS[${i}].jam=Number(this.value);save();render();">
-<option value="1" ${Number(p.jam)==1?"selected":""}>1 Jam</option>
-<option value="2" ${Number(p.jam)==2?"selected":""}>2 Jam</option>
-<option value="3" ${Number(p.jam)==3?"selected":""}>3 Jam</option>
-<option value="4" ${Number(p.jam)==4?"selected":""}>4 Jam</option>
-<option value="5" ${Number(p.jam)==5?"selected":""}>5 Jam</option>
-</select>
-
-<div class="meta"><span>Status sesi</span><span>${p.jalan ? "Timer aktif" : (p.selesaiNotif ? "Sesi selesai" : "Belum dimulai")}</span></div>
-
-<div id="timer${i}" class="timer ${p.detik<=600 && p.detik>0 ? "timerWarning" : ""}">
-${format(Number(p.detik||0))}
-</div>
-
-<div class="harga">
-<span>Total sementara</span>
-<b>Rp ${rupiah(total)}</b>
-</div>
-
-<div class="menuSection">
-<div class="menuTitle">Pilih Menu</div>
-<div class="menuDropdownRow">
-<select id="menuSelect${i}" class="menuDropdownSelect">
-<option value="">Pilih menu...</option>
-${menu.map((m,idx)=>`<option value="${idx}">${m.nama} • ${m.kategori} • Rp ${rupiah(m.harga)}</option>`).join("")}
-</select>
-<input id="menuQtyInput${i}" class="menuQtyInput" type="number" min="1" value="1">
-<button class="add" onclick="tambahMenu(${i})">Tambah</button>
-</div>
-<div class="menuList">
-${snackHTML}
-</div>
-<div class="billBreakdown">
-<div class="billLine"><span>Billing (${p.jam} jam)</span><span>Rp ${rupiah(hargaMain(i))}</span></div>
-<div class="billLine"><span>Total Menu</span><span>Rp ${rupiah(snackTotal(p.snack))}</span></div>
-<div class="billLine"><span><strong>Grand Total</strong></span><span><strong>Rp ${rupiah(total)}</strong></span></div>
-</div>
-</div>
-
-<div class="controls" style="margin-top:18px;">
-<button class="start" onclick="start(${i})">Start</button>
-<button class="pause" onclick="pause(${i})">Pause</button>
-<button class="add" onclick="tambah5menit(${i})">+5m</button>
-<button class="add" onclick="tambah30(${i})">+30m</button>
-<button class="add" onclick="tambah1jam(${i})">+1h</button>
-<button class="reset" onclick="resetTimer(${i})">Reset</button>
-<button class="start" onclick="bayar(${i})">Bayar</button>
-</div>
-</div>`
-})
-
-document.getElementById("psContainer").innerHTML = html
-renderSummary()
-renderHistory()
-let totalPendEl=document.getElementById("totalPend")
-if(totalPendEl) totalPendEl.innerText = "Rp " + rupiah(pendapatan)
-renderHome()
-renderRekap()
+  document.getElementById('psContainer').innerHTML=`<div class="grid">${html}</div>`
+  renderSummary()
+  renderHistory()
+  renderHome()
+  renderRekap()
+  const totalPendEl=document.getElementById('totalPend')
+  if(totalPendEl) totalPendEl.innerText='Rp ' + rupiah(pendapatan)
+  applyCompactMode()
 }
 
 function renderHistory(){
-let html=""
-transaksi.forEach((t,index)=>{
-html += `
-<tr>
-<td>${t.tanggal}</td>
-<td>${t.ps}</td>
-<td>${t.nama || "-"}</td>
-<td>Rp ${rupiah(t.total)}</td>
-<td><button class="reset" onclick="hapusTransaksi(${index})">Hapus</button></td>
-</tr>`
-})
-let history=document.getElementById("history")
-if(history) history.innerHTML = html || '<tr><td colspan="5">Belum ada transaksi.</td></tr>'
+  let html=''
+  transaksi.forEach((t,index)=>{
+    html += `<tr><td>${t.tanggal}<br><small>${t.billing || '-'}</small></td><td>${t.ps}</td><td>${t.nama || '-'}</td><td>Rp ${rupiah(t.total)}</td><td><button class="reset" onclick="hapusTransaksi(${index})">Hapus</button></td></tr>`
+  })
+  let history=document.getElementById('history')
+  if(history) history.innerHTML = html || '<tr><td colspan="5">Belum ada transaksi.</td></tr>'
 }
 
 function save(){
-localStorage.setItem("dataPS",JSON.stringify(dataPS))
-localStorage.setItem("trans",JSON.stringify(transaksi))
-localStorage.setItem("pend",pendapatan)
-localStorage.setItem("pengeluaran",JSON.stringify(pengeluaran))
+  localStorage.setItem('dataPS', JSON.stringify(dataPS))
+  localStorage.setItem('trans', JSON.stringify(transaksi))
+  localStorage.setItem('pend', pendapatan)
+  localStorage.setItem('pengeluaran', JSON.stringify(pengeluaran))
 }
 
 function tick(){
-const now=Date.now()
-
-dataPS.forEach((p,i)=>{
-if(p.jalan && p.endTime){
-const sisa = Math.max(0, Math.ceil((p.endTime - now)/1000))
-const prevDetik = Number(p.detik || 0)
-p.detik = sisa
-p.lastTick = now
-
-if(sisa<=600 && sisa>0 && !p.peringatan){
-document.getElementById("alarm10")?.play?.()
-p.peringatan = true
-notifyUser("Peringatan 10 menit", psList[i].nama + " tinggal " + format(sisa))
+  const now=Date.now()
+  dataPS.forEach((p,i)=>{
+    if(p.jalan && p.endTime){
+      const sisa=Math.max(0, Math.ceil((p.endTime-now)/1000))
+      const prevDetik=Number(p.detik||0)
+      p.detik=sisa
+      p.lastTick=now
+      if(sisa<=600 && sisa>0 && !p.peringatan){
+        document.getElementById('alarm10')?.play?.()
+        p.peringatan=true
+        notifyUser('Peringatan 10 menit', psList[i].nama + ' tinggal ' + format(sisa))
+      }
+      if(sisa===0){
+        p.jalan=false
+        p.endTime=null
+        if(!p.selesaiNotif){
+          p.selesaiNotif=true
+          document.getElementById('alarm0')?.play?.()
+          notifyUser('Waktu habis', psList[i].nama + ' atas nama ' + (p.nama || '-') + ' sudah selesai.')
+        }
+      }
+      let timer=document.getElementById('timer'+i)
+      if(timer){
+        timer.innerText=format(p.detik)
+        timer.className='timer' + (p.detik<=600 && p.detik>0 ? ' timerWarning' : '')
+        let card=timer.closest('.pscard')
+        if(card) card.className='pscard ' + getStatusClass(p)
+      }
+      if(prevDetik!==p.detik){ renderSummary(); renderHome() }
+    }
+  })
+  save()
 }
 
-if(sisa===0){
-p.jalan = false
-p.endTime = null
-if(!p.selesaiNotif){
-p.selesaiNotif = true
-document.getElementById("alarm0")?.play?.()
-notifyUser("Waktu habis", psList[i].nama + " atas nama " + (p.nama || "-") + " sudah selesai.")
-}
-}
-
-let timer=document.getElementById("timer"+i)
-if(timer){
-timer.innerText = format(p.detik)
-timer.className = "timer" + (p.detik<=600 && p.detik>0 ? " timerWarning" : "")
-}
-
-let card = timer ? timer.closest(".pscard") : null
-if(card){
-card.className = "pscard " + getStatusClass(p)
-}
-
-if(prevDetik !== p.detik){
-const statusEl = card ? card.querySelector(".meta span:last-child") : null
-if(statusEl){
-statusEl.textContent = p.jalan ? "Timer aktif" : (p.selesaiNotif ? "Sesi selesai" : "Belum dimulai")
-}
-}
-}
-})
-
-save()
-renderSummary()
-}
-
-document.addEventListener("visibilitychange", ()=>{
-if(!document.hidden){
-recalcRunningTimers(true)
-render()
-}
-})
-
-window.addEventListener("focus", ()=>{
-recalcRunningTimers(true)
-render()
-})
+document.addEventListener('visibilitychange', ()=>{ if(!document.hidden){ recalcRunningTimers(true); render() } })
+window.addEventListener('focus', ()=>{ recalcRunningTimers(true); render() })
 
 ensureNotificationPermission()
 registerServiceWorker()
 setupInstallPrompt()
+applyCompactMode()
 recalcRunningTimers(true)
 setInterval(tick,1000)
 render()
 showSection('home')
 </script>
-
 </body>
 </html>
