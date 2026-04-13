@@ -698,9 +698,8 @@ const menu=[
   {nama:'Nutrisari',harga:5000,kategori:'Minuman'}
 ]
 
-function buildSpreadsheetRows(i, totalMain, totalSnack, total){
+function buildSpreadsheetRows(snapshot){
   const now = new Date()
-
   const tanggalHari = now.toLocaleString("id-ID", {
     weekday: "long",
     year: "numeric",
@@ -710,7 +709,7 @@ function buildSpreadsheetRows(i, totalMain, totalSnack, total){
     minute: "2-digit"
   })
 
-  const rincian = menuRincian(dataPS[i].snack)
+  const rincian = snapshot.rincian || []
 
   let menuGabung = "-"
   let hargaMenuGabung = "-"
@@ -718,38 +717,38 @@ function buildSpreadsheetRows(i, totalMain, totalSnack, total){
   let totalHargaMenuGabung = "-"
 
   if (rincian.length) {
-  menuGabung = rincian
-    .map(item => `- ${item.nama} ${item.qty}x`)
-    .join("\n")
+    menuGabung = rincian
+      .map(item => `- ${item.nama} ${item.qty}x`)
+      .join("\n")
 
-  hargaMenuGabung = rincian
-    .map(item => `Rp${item.harga}`)
-    .join("\n")
+    hargaMenuGabung = rincian
+      .map(item => `Rp${rupiah(item.harga)}`)
+      .join("\n")
 
-  qtyMenuGabung = rincian
-    .map(item => item.qty + "x")
-    .join("\n")
+    qtyMenuGabung = rincian
+      .map(item => `${item.qty}x`)
+      .join("\n")
 
-  totalHargaMenuGabung = rincian
-    .map(item => `Rp${item.subtotal}`)
-    .join("\n")
-}
+    totalHargaMenuGabung = rincian
+      .map(item => `Rp${rupiah(item.subtotal)}`)
+      .join("\n")
+  }
 
   return [{
     createdAt: now.toISOString(),
     tanggalHari,
-    ps: psList[i].nama,
-    tipePS: psList[i].tipe,
-    namaPelanggan: dataPS[i].nama || "-",
-    modeBilling: dataPS[i].modeBilling || "Reguler",
-    billing: dataPS[i].jam + " Jam",
-    hargaBilling: totalMain,
+    ps: snapshot.ps,
+    tipePS: snapshot.tipePS,
+    namaPelanggan: snapshot.namaPelanggan || "-",
+    modeBilling: snapshot.modeBilling,
+    billing: snapshot.billing,
+    hargaBilling: snapshot.hargaBilling,
     menu: menuGabung,
     hargaMenu: hargaMenuGabung,
     qtyMenu: qtyMenuGabung,
     totalHargaMenu: totalHargaMenuGabung,
-    totalSnack: totalSnack,
-    totalKeseluruhan: total
+    totalSnack: snapshot.totalSnack,
+    totalKeseluruhan: snapshot.totalKeseluruhan
   }]
 }
 
@@ -926,36 +925,46 @@ function tambah30(i){ dataPS[i].detik += 1800; if(dataPS[i].jalan){ dataPS[i].en
 function tambah1jam(i){ dataPS[i].detik += 3600; if(dataPS[i].jalan){ dataPS[i].endTime=(dataPS[i].endTime||Date.now())+3600000; dataPS[i].selesaiNotif=false } save(); render() }
 
 async function bayar(i){
+  const isPaket = dataPS[i].billingMode === 'paket_mabar'
   const totalMain = hargaMain(i)
   const totalSnack = snackTotal(dataPS[i].snack)
   const total = totalMain + totalSnack
+  const now = new Date()
+
+  const snapshot = {
+    ps: psList[i].nama,
+    tipePS: psList[i].tipe,
+    namaPelanggan: dataPS[i].nama || '-',
+    modeBilling: isPaket ? 'Paket Mabar' : 'Reguler',
+    billing: isPaket ? paketMabar[psList[i].tipe].label : `${Number(dataPS[i].jam)} Jam`,
+    hargaBilling: totalMain,
+    totalSnack: totalSnack,
+    totalKeseluruhan: total,
+    rincian: menuRincian(dataPS[i].snack)
+  }
 
   pendapatan += total
-
-  const now = new Date()
 
   transaksi.unshift({
     tanggal: now.toLocaleString("id-ID"),
     createdAt: now.toISOString(),
-    ps: psList[i].nama,
-    nama: dataPS[i].nama,
-    billing: getBillingLabel(i),
-    hargaBilling: totalMain,
-    totalMenu: totalSnack,
-    total
+    ps: snapshot.ps,
+    nama: snapshot.namaPelanggan,
+    billing: snapshot.billing,
+    modeBilling: snapshot.modeBilling,
+    hargaBilling: snapshot.hargaBilling,
+    totalMenu: snapshot.totalSnack,
+    total: snapshot.totalKeseluruhan
   })
 
-  /* 🔥 kirim ke spreadsheet */
-  const rows = buildSpreadsheetRows(i, totalMain, totalSnack, total)
+  const rows = buildSpreadsheetRows(snapshot)
   await kirimTransaksiKeSpreadsheet(rows)
 
   cetakStruk(i, totalMain, totalSnack, total)
 
   dataPS[i] = {
     ...createDefaultPS(),
-    jam: dataPS[i].jam,
-    billingMode: dataPS[i].billingMode,
-    paketDrink: dataPS[i].paketDrink
+    jam: dataPS[i].jam
   }
 
   save()
