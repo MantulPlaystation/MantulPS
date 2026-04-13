@@ -700,6 +700,7 @@ const menu=[
 
 function buildSpreadsheetRows(i, totalMain, totalSnack, total){
   const now = new Date()
+
   const tanggalHari = now.toLocaleString("id-ID", {
     weekday: "long",
     year: "numeric",
@@ -710,37 +711,35 @@ function buildSpreadsheetRows(i, totalMain, totalSnack, total){
   })
 
   const rincian = menuRincian(dataPS[i].snack)
-  const billingLabel = getBillingLabel(i)
-  const baseRow = {
+
+  let menuGabung = "-"
+  let hargaMenuGabung = "-"
+  let qtyMenuGabung = "-"
+  let totalHargaMenuGabung = "-"
+
+  if (rincian.length) {
+    menuGabung = rincian.map(item => item.nama).join(" | ")
+    hargaMenuGabung = rincian.map(item => item.harga).join(" | ")
+    qtyMenuGabung = rincian.map(item => item.qty).join(" | ")
+    totalHargaMenuGabung = rincian.map(item => item.subtotal).join(" | ")
+  }
+
+  return [{
     createdAt: now.toISOString(),
     tanggalHari,
     ps: psList[i].nama,
     tipePS: psList[i].tipe,
-    namaPelanggan: dataPS[i].nama || '-',
-    modeBilling: isPaketMabar(i) ? 'Paket Mabar' : 'Reguler',
-    billing: billingLabel,
+    namaPelanggan: dataPS[i].nama || "-",
+    modeBilling: dataPS[i].modeBilling || "Reguler",
+    billing: dataPS[i].jam + " Jam",
     hargaBilling: totalMain,
-    totalSnack,
+    menu: menuGabung,
+    hargaMenu: hargaMenuGabung,
+    qtyMenu: qtyMenuGabung,
+    totalHargaMenu: totalHargaMenuGabung,
+    totalSnack: totalSnack,
     totalKeseluruhan: total
-  }
-
-  if(!rincian.length){
-    return [{
-      ...baseRow,
-      menu: '-',
-      hargaMenu: 0,
-      qtyMenu: 0,
-      totalHargaMenu: 0
-    }]
-  }
-
-  return rincian.map(item => ({
-    ...baseRow,
-    menu: item.nama,
-    hargaMenu: item.harga,
-    qtyMenu: item.qty,
-    totalHargaMenu: item.subtotal
-  }))
+  }]
 }
 
 function format(w){
