@@ -718,11 +718,22 @@ function buildSpreadsheetRows(i, totalMain, totalSnack, total){
   let totalHargaMenuGabung = "-"
 
   if (rincian.length) {
-    menuGabung = rincian.map(item => item.nama).join(" | ")
-    hargaMenuGabung = rincian.map(item => item.harga).join(" | ")
-    qtyMenuGabung = rincian.map(item => item.qty).join(" | ")
-    totalHargaMenuGabung = rincian.map(item => item.subtotal).join(" | ")
-  }
+  menuGabung = rincian
+    .map(item => `- ${item.nama} ${item.qty}x`)
+    .join("\n")
+
+  hargaMenuGabung = rincian
+    .map(item => `Rp${item.harga}`)
+    .join("\n")
+
+  qtyMenuGabung = rincian
+    .map(item => item.qty + "x")
+    .join("\n")
+
+  totalHargaMenuGabung = rincian
+    .map(item => `Rp${item.subtotal}`)
+    .join("\n")
+}
 
   return [{
     createdAt: now.toISOString(),
