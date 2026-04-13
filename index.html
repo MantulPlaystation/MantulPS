@@ -699,16 +699,6 @@ const menu=[
 ]
 
 function buildSpreadsheetRows(snapshot){
-  const now = new Date()
-  const tanggalHari = now.toLocaleString("id-ID", {
-    weekday: "long",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit"
-  })
-
   const rincian = snapshot.rincian || []
 
   let menuGabung = "-"
@@ -735,11 +725,11 @@ function buildSpreadsheetRows(snapshot){
   }
 
   return [{
-    createdAt: now.toISOString(),
-    tanggalHari,
+    createdAt: snapshot.createdAt,
+    tanggalHari: snapshot.tanggalHari,
     ps: snapshot.ps,
     tipePS: snapshot.tipePS,
-    namaPelanggan: snapshot.namaPelanggan || "-",
+    namaPelanggan: snapshot.namaPelanggan,
     modeBilling: snapshot.modeBilling,
     billing: snapshot.billing,
     hargaBilling: snapshot.hargaBilling,
@@ -925,39 +915,54 @@ function tambah30(i){ dataPS[i].detik += 1800; if(dataPS[i].jalan){ dataPS[i].en
 function tambah1jam(i){ dataPS[i].detik += 3600; if(dataPS[i].jalan){ dataPS[i].endTime=(dataPS[i].endTime||Date.now())+3600000; dataPS[i].selesaiNotif=false } save(); render() }
 
 async function bayar(i){
-  const isPaket = dataPS[i].billingMode === 'paket_mabar'
+  const isPaketMabar = dataPS[i].billingMode === 'paket_mabar'
   const totalMain = hargaMain(i)
   const totalSnack = snackTotal(dataPS[i].snack)
   const total = totalMain + totalSnack
   const now = new Date()
 
-  const snapshot = {
-    ps: psList[i].nama,
-    tipePS: psList[i].tipe,
-    namaPelanggan: dataPS[i].nama || '-',
-    modeBilling: isPaket ? 'Paket Mabar' : 'Reguler',
-    billing: isPaket ? paketMabar[psList[i].tipe].label : `${Number(dataPS[i].jam)} Jam`,
-    hargaBilling: totalMain,
-    totalSnack: totalSnack,
-    totalKeseluruhan: total,
-    rincian: menuRincian(dataPS[i].snack)
-  }
+  const modeBillingSnapshot = isPaketMabar ? 'Paket Mabar' : 'Reguler'
+  const billingSnapshot = isPaketMabar
+    ? `Paket Mabar ${Number(dataPS[i].jam)} Jam`
+    : `${Number(dataPS[i].jam)} Jam`
+
+  const rincianSnapshot = menuRincian(dataPS[i].snack)
 
   pendapatan += total
 
   transaksi.unshift({
     tanggal: now.toLocaleString("id-ID"),
     createdAt: now.toISOString(),
-    ps: snapshot.ps,
-    nama: snapshot.namaPelanggan,
-    billing: snapshot.billing,
-    modeBilling: snapshot.modeBilling,
-    hargaBilling: snapshot.hargaBilling,
-    totalMenu: snapshot.totalSnack,
-    total: snapshot.totalKeseluruhan
+    ps: psList[i].nama,
+    nama: dataPS[i].nama || '-',
+    billing: billingSnapshot,
+    modeBilling: modeBillingSnapshot,
+    hargaBilling: totalMain,
+    totalMenu: totalSnack,
+    total
   })
 
-  const rows = buildSpreadsheetRows(snapshot)
+  const rows = buildSpreadsheetRows({
+    createdAt: now.toISOString(),
+    tanggalHari: now.toLocaleString("id-ID", {
+      weekday: "long",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit"
+    }),
+    ps: psList[i].nama,
+    tipePS: psList[i].tipe,
+    namaPelanggan: dataPS[i].nama || '-',
+    modeBilling: modeBillingSnapshot,
+    billing: billingSnapshot,
+    hargaBilling: totalMain,
+    totalSnack: totalSnack,
+    totalKeseluruhan: total,
+    rincian: rincianSnapshot
+  })
+
   await kirimTransaksiKeSpreadsheet(rows)
 
   cetakStruk(i, totalMain, totalSnack, total)
