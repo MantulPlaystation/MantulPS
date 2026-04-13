@@ -355,53 +355,6 @@ box-shadow:0 0 0 4px rgba(255,255,255,.05);
 100%{transform:scale(1);opacity:.85}
 }
 
-
-.loginOverlay{
-position:fixed;
-inset:0;
-z-index:400;
-display:grid;
-place-items:center;
-padding:20px;
-background:rgba(4,8,18,.72);
-backdrop-filter:blur(10px);
-}
-.loginOverlay.hidden{display:none}
-.loginCard{
-width:min(100%,560px);
-background:var(--panel-solid);
-border:1px solid var(--line);
-border-radius:28px;
-padding:24px;
-box-shadow:var(--shadow);
-}
-.loginCard h2{margin:0 0 10px;font-size:30px}
-.loginGrid{display:grid;grid-template-columns:1fr;gap:12px}
-.loginGrid input{
-width:100%;
-padding:13px 14px;
-border-radius:14px;
-border:1px solid rgba(255,255,255,.10);
-background:rgba(255,255,255,.06);
-color:var(--text);
-outline:none;
-min-height:48px;
-}
-.roleNotice{
-margin-bottom:18px;
-padding:14px 16px;
-border-radius:18px;
-background:rgba(255,255,255,.05);
-border:1px solid var(--line);
-color:var(--muted);
-}
-.roleNotice strong{color:var(--text)}
-.sectionBlocked{
-opacity:.55;
-pointer-events:none;
-filter:grayscale(.1);
-}
-
 </style>
 </head>
 <body>
@@ -421,49 +374,10 @@ filter:grayscale(.1);
   </div>
 
   <div class="nav-actions">
-    <span id="userBadge" class="nav-link" style="display:none; cursor:default;"></span>
-    <button id="logoutBtn" class="nav-link" style="display:none;" onclick="logout()">Logout</button>
     <button id="compactBtn" class="nav-link" onclick="toggleCompactMode()">Mode Compact: OFF</button>
     <button id="installBtn" class="add installBtn" style="display:none;">Install App</button>
   </div>
 </nav>
-
-<div id="loginOverlay" class="loginOverlay">
-  <div class="loginCard">
-    <div class="eyebrow">Multi Kasir</div>
-    <h2 id="authTitle">Masuk ke sistem</h2>
-    <p class="sectionDesc" style="margin:0 0 16px;">Login atau daftar akun baru untuk membuka fitur sesuai peran.</p>
-    <div class="roleNotice">
-      <strong>Admin</strong>: akses penuh<br>
-      <strong>Operator</strong>: timer, menu, bayar<br>
-      <strong>Manager</strong>: dashboard, rekap, riwayat
-    </div>
-    <div style="display:flex; gap:10px; margin:16px 0 14px; flex-wrap:wrap;">
-      <button id="authTabLogin" class="nav-link active" type="button" onclick="switchAuthMode('login')">Login</button>
-      <button id="authTabRegister" class="nav-link" type="button" onclick="switchAuthMode('register')">Register</button>
-    </div>
-
-    <div id="loginForm" class="loginGrid">
-      <input id="loginUsername" type="text" placeholder="Username">
-      <input id="loginPassword" type="password" placeholder="Password">
-      <button class="start" onclick="login()">Login</button>
-      <div id="loginError" style="display:none; color:#ff98a8; font-size:14px;"></div>
-    </div>
-
-    <div id="registerForm" class="loginGrid" style="display:none;">
-      <input id="registerDisplayName" type="text" placeholder="Nama lengkap / nama kasir">
-      <input id="registerUsername" type="text" placeholder="Username baru">
-      <input id="registerPassword" type="password" placeholder="Password baru">
-      <select id="registerRole">
-        <option value="operator">Operator</option>
-        <option value="manager">Manager</option>
-        <option value="admin">Admin</option>
-      </select>
-      <button class="add" onclick="registerUser()">Buat Akun</button>
-      <div id="registerError" style="display:none; color:#ff98a8; font-size:14px;"></div>
-    </div>
-  </div>
-</div>
 
 
 <div id="backupStatus" class="backupStatus hidden status-idle" aria-live="polite">
@@ -546,7 +460,7 @@ filter:grayscale(.1);
       <div class="panelCard dashboardCard">
         <div>Total Pendapatan</div>
         <h2 id="totalPend">0</h2>
-        <button data-requires="destructive" onclick="resetPendapatan()">Reset Pendapatan</button>
+        <button onclick="resetPendapatan()">Reset Pendapatan</button>
       </div>
     </div>
 
@@ -558,7 +472,7 @@ filter:grayscale(.1);
           <div class="panelEyebrow">Riwayat</div>
           <h3>Riwayat transaksi</h3>
         </div>
-        <button data-requires="destructive" onclick="hapusRiwayat()">Hapus Riwayat</button>
+        <button onclick="hapusRiwayat()">Hapus Riwayat</button>
       </div>
 
       <div class="tableWrap">
@@ -606,7 +520,7 @@ filter:grayscale(.1);
             <option value="Lainnya">Lainnya</option>
           </select>
           <input id="expenseAmount" type="number" min="0" placeholder="Nominal pengeluaran">
-          <button data-requires="expense" class="add" onclick="addExpense()">Simpan Pengeluaran</button>
+          <button class="add" onclick="addExpense()">Simpan Pengeluaran</button>
         </div>
       </div>
 
@@ -675,7 +589,7 @@ filter:grayscale(.1);
 
 <script>
 let deferredPrompt = null
-const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwO0FVYiQQsBDXXrueaK9aa4LOvnJCeKd66mdeQ3sx2vOrClTfsVvKp0UcVaRzGhxqA5w/exec"
+const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwDpQU525sIJr0wysbeRGK1c4vmuOe1dAwxzZgQegm6ZVs3d3m3umwQMRgrnnFLB24ADQ/exec"
 
 let backupStatusState = {
   type:'idle',
@@ -757,245 +671,6 @@ const paketMabar={
   PS4:{label:'Paket Mabar 3 Jam', jam:3, harga:32000, items:[{nama:'Chuba',qty:2},{nama:'Kopi Liong / Nutrisari',qty:1}]}
 }
 
-const defaultUserAccounts = {
-  mantul: { username:'mantul', password:'manager123', role:'manager', displayName:'Mantul' },
-  bintang: { username:'bintang', password:'operator123', role:'operator', displayName:'Bintang' },
-  gilang: { username:'gilang', password:'admin123', role:'admin', displayName:'Gilang' }
-}
-
-function getRegisteredUsers(){
-  try{
-    return JSON.parse(localStorage.getItem('registeredUsers') || '{}')
-  }catch(e){
-    return {}
-  }
-}
-function saveRegisteredUsers(users){
-  localStorage.setItem('registeredUsers', JSON.stringify(users || {}))
-}
-function getAllUserAccounts(){
-  return {
-    ...defaultUserAccounts,
-    ...getRegisteredUsers()
-  }
-}
-
-const rolePermissions = {
-  admin: {
-    sections:['home','timer','rekap'],
-    timer:true,
-    rekap:true,
-    expense:true,
-    destructive:true,
-    reports:true
-  },
-  operator: {
-    sections:['home','timer'],
-    timer:true,
-    rekap:false,
-    expense:false,
-    destructive:false,
-    reports:false
-  },
-  manager: {
-    sections:['home','rekap'],
-    timer:false,
-    rekap:true,
-    expense:false,
-    destructive:false,
-    reports:true
-  }
-}
-
-function getCurrentUser(){
-  try{
-    return JSON.parse(localStorage.getItem('currentUser') || 'null')
-  }catch(e){
-    return null
-  }
-}
-function getCurrentRole(){
-  return getCurrentUser()?.role || null
-}
-function hasPermission(key){
-  const role = getCurrentRole()
-  if(!role || !rolePermissions[role]) return false
-  return !!rolePermissions[role][key]
-}
-function canAccessSection(section){
-  const role = getCurrentRole()
-  if(!role || !rolePermissions[role]) return false
-  return rolePermissions[role].sections.includes(section)
-}
-function requirePermission(key, message){
-  if(hasPermission(key)) return true
-  alert(message || 'Akses ditolak untuk role ini.')
-  return false
-}
-function renderAuthUI(){
-  const user = getCurrentUser()
-  const overlay = document.getElementById('loginOverlay')
-  const badge = document.getElementById('userBadge')
-  const logoutBtn = document.getElementById('logoutBtn')
-
-  if(!user){
-    overlay?.classList.remove('hidden')
-    if(badge) badge.style.display='none'
-    if(logoutBtn) logoutBtn.style.display='none'
-    document.body.style.overflow='hidden'
-    return
-  }
-
-  document.body.style.overflow=''
-  overlay?.classList.add('hidden')
-  if(badge){
-    badge.style.display='inline-flex'
-    badge.textContent = user.displayName + ' • ' + user.role.toUpperCase()
-  }
-  if(logoutBtn) logoutBtn.style.display='inline-block'
-}
-function switchAuthMode(mode){
-  const loginForm = document.getElementById('loginForm')
-  const registerForm = document.getElementById('registerForm')
-  const loginTab = document.getElementById('authTabLogin')
-  const registerTab = document.getElementById('authTabRegister')
-  const title = document.getElementById('authTitle')
-  const loginError = document.getElementById('loginError')
-  const registerError = document.getElementById('registerError')
-
-  if(mode === 'register'){
-    loginForm && (loginForm.style.display='none')
-    registerForm && (registerForm.style.display='grid')
-    loginTab?.classList.remove('active')
-    registerTab?.classList.add('active')
-    if(title) title.textContent='Daftar akun baru'
-  }else{
-    loginForm && (loginForm.style.display='grid')
-    registerForm && (registerForm.style.display='none')
-    loginTab?.classList.add('active')
-    registerTab?.classList.remove('active')
-    if(title) title.textContent='Masuk ke sistem'
-  }
-  if(loginError) loginError.style.display='none'
-  if(registerError) registerError.style.display='none'
-}
-
-function registerUser(){
-  const displayName = document.getElementById('registerDisplayName')?.value?.trim()
-  const usernameRaw = document.getElementById('registerUsername')?.value?.trim()?.toLowerCase()
-  const password = document.getElementById('registerPassword')?.value || ''
-  const role = document.getElementById('registerRole')?.value || 'operator'
-  const errEl = document.getElementById('registerError')
-
-  if(!displayName || !usernameRaw || !password){
-    if(errEl){
-      errEl.style.display='block'
-      errEl.textContent='Nama, username, dan password wajib diisi.'
-    }
-    return
-  }
-
-  if(usernameRaw.length < 3){
-    if(errEl){
-      errEl.style.display='block'
-      errEl.textContent='Username minimal 3 karakter.'
-    }
-    return
-  }
-
-  const users = getRegisteredUsers()
-  const allUsers = getAllUserAccounts()
-  if(allUsers[usernameRaw]){
-    if(errEl){
-      errEl.style.display='block'
-      errEl.textContent='Username sudah dipakai.'
-    }
-    return
-  }
-
-  users[usernameRaw] = {
-    username: usernameRaw,
-    password,
-    role,
-    displayName
-  }
-  saveRegisteredUsers(users)
-
-  if(errEl){
-    errEl.style.display='block'
-    errEl.style.color='#8bf1c4'
-    errEl.textContent='Akun berhasil dibuat. Silakan login.'
-  }
-
-  document.getElementById('loginUsername').value = usernameRaw
-  document.getElementById('loginPassword').value = password
-  switchAuthMode('login')
-}
-
-function login(){
-  const username = document.getElementById('loginUsername')?.value?.trim()?.toLowerCase()
-  const password = document.getElementById('loginPassword')?.value || ''
-  const errEl = document.getElementById('loginError')
-  const user = getAllUserAccounts()[username]
-  if(!user || user.password !== password){
-    if(errEl){
-      errEl.style.display='block'
-      errEl.textContent='Username atau password salah.'
-    }
-    return
-  }
-  localStorage.setItem('currentUser', JSON.stringify({
-    username:user.username,
-    role:user.role,
-    displayName:user.displayName,
-    loginAt:new Date().toISOString()
-  }))
-  if(errEl) errEl.style.display='none'
-  renderAuthUI()
-  render()
-  if(canAccessSection('home')){
-    showSection('home')
-  }
-}
-function logout(){
-  if(!confirm('Logout dari sesi ini?')) return
-  localStorage.removeItem('currentUser')
-  renderAuthUI()
-}
-function applyRolePermissionsUI(){
-  const role = getCurrentRole()
-  const timerSection = document.getElementById('timerSection')
-  const rekapSection = document.getElementById('rekapSection')
-  const navTimer = document.getElementById('navTimer')
-  const navRekap = document.getElementById('navRekap')
-  const navHome = document.getElementById('navHome')
-
-  ;[
-    ['home', navHome],
-    ['timer', navTimer],
-    ['rekap', navRekap]
-  ].forEach(([section, btn])=>{
-    if(!btn) return
-    btn.style.display = canAccessSection(section) ? 'inline-block' : 'none'
-  })
-
-  if(timerSection) timerSection.classList.toggle('sectionBlocked', !hasPermission('timer'))
-  if(rekapSection) rekapSection.classList.toggle('sectionBlocked', !hasPermission('rekap'))
-
-  document.querySelectorAll('[data-requires="timer"]').forEach(el=>{
-    el.disabled = !hasPermission('timer')
-    el.style.display = hasPermission('timer') ? '' : 'none'
-  })
-  document.querySelectorAll('[data-requires="expense"]').forEach(el=>{
-    el.disabled = !hasPermission('expense')
-    el.style.display = hasPermission('expense') ? '' : 'none'
-  })
-  document.querySelectorAll('[data-requires="destructive"]').forEach(el=>{
-    el.disabled = !hasPermission('destructive')
-    el.style.display = hasPermission('destructive') ? '' : 'none'
-  })
-}
-
 function createDefaultPS(){
   return {nama:'',jam:1,detik:0,jalan:false,snack:{},peringatan:false,selesaiNotif:false,endTime:null,lastTick:null,billingMode:'reguler',paketDrink:'Kopi Liong'}
 }
@@ -1023,49 +698,48 @@ const menu=[
   {nama:'Nutrisari',harga:5000,kategori:'Minuman'}
 ]
 
-function buildSpreadsheetRows(i, totalMain, totalSnack, total){
-  const now = new Date()
-  const tanggalHari = now.toLocaleString("id-ID", {
-    weekday: "long",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit"
-  })
+function buildSpreadsheetRows(snapshot){
+  const rincian = snapshot.rincian || []
 
-  const rincian = menuRincian(dataPS[i].snack)
-  const billingLabel = getBillingLabel(i)
-  const baseRow = {
-    createdAt: now.toISOString(),
-    tanggalHari,
-    ps: psList[i].nama,
-    tipePS: psList[i].tipe,
-    namaPelanggan: dataPS[i].nama || '-',
-    modeBilling: isPaketMabar(i) ? 'Paket Mabar' : 'Reguler',
-    billing: billingLabel,
-    hargaBilling: totalMain,
-    totalSnack,
-    totalKeseluruhan: total
+  let menuGabung = "-"
+  let hargaMenuGabung = "-"
+  let qtyMenuGabung = "-"
+  let totalHargaMenuGabung = "-"
+
+  if (rincian.length) {
+    menuGabung = rincian
+      .map(item => `- ${item.nama} ${item.qty}x`)
+      .join("\n")
+
+    hargaMenuGabung = rincian
+      .map(item => `Rp${rupiah(item.harga)}`)
+      .join("\n")
+
+    qtyMenuGabung = rincian
+      .map(item => `${item.qty}x`)
+      .join("\n")
+
+    totalHargaMenuGabung = rincian
+      .map(item => `Rp${rupiah(item.subtotal)}`)
+      .join("\n")
   }
 
-  if(!rincian.length){
-    return [{
-      ...baseRow,
-      menu: '-',
-      hargaMenu: 0,
-      qtyMenu: 0,
-      totalHargaMenu: 0
-    }]
-  }
-
-  return rincian.map(item => ({
-    ...baseRow,
-    menu: item.nama,
-    hargaMenu: item.harga,
-    qtyMenu: item.qty,
-    totalHargaMenu: item.subtotal
-  }))
+  return [{
+    createdAt: snapshot.createdAt,
+    tanggalHari: snapshot.tanggalHari,
+    ps: snapshot.ps,
+    tipePS: snapshot.tipePS,
+    namaPelanggan: snapshot.namaPelanggan,
+    modeBilling: snapshot.modeBilling,
+    billing: snapshot.billing,
+    hargaBilling: snapshot.hargaBilling,
+    menu: menuGabung,
+    hargaMenu: hargaMenuGabung,
+    qtyMenu: qtyMenuGabung,
+    totalHargaMenu: totalHargaMenuGabung,
+    totalSnack: snapshot.totalSnack,
+    totalKeseluruhan: snapshot.totalKeseluruhan
+  }]
 }
 
 function format(w){
@@ -1199,10 +873,9 @@ function recalcRunningTimers(showRestoreNotification=false){
   })
 }
 
-function tambahSnack(ps,index){ if(!requirePermission('timer','Role ini tidak boleh mengubah menu.')) return; dataPS[ps].snack[index]=(dataPS[ps].snack[index]||0)+1; save(); render() }
-function hapusMenu(ps,index){ if(!requirePermission('timer','Role ini tidak boleh mengubah menu.')) return; if(dataPS[ps].snack[index]){ delete dataPS[ps].snack[index]; save(); render() } }
+function tambahSnack(ps,index){ dataPS[ps].snack[index]=(dataPS[ps].snack[index]||0)+1; save(); render() }
+function hapusMenu(ps,index){ if(dataPS[ps].snack[index]){ delete dataPS[ps].snack[index]; save(); render() } }
 function kurangSnack(ps,index){
-  if(!requirePermission('timer','Role ini tidak boleh mengubah menu.')) return
   if(dataPS[ps].snack[index]){
     dataPS[ps].snack[index]--
     if(dataPS[ps].snack[index]<=0) delete dataPS[ps].snack[index]
@@ -1211,7 +884,6 @@ function kurangSnack(ps,index){
 }
 
 function start(i){
-  if(!requirePermission('timer','Role ini tidak boleh menjalankan timer.')) return
   ensureNotificationPermission()
   if(isPaketMabar(i)){ dataPS[i].jam=3 }
   if(dataPS[i].detik===0){ dataPS[i].detik=Number(dataPS[i].jam)*3600 }
@@ -1223,7 +895,6 @@ function start(i){
   save(); render()
 }
 function pause(i){
-  if(!requirePermission('timer','Role ini tidak boleh pause timer.')) return
   if(dataPS[i].jalan && dataPS[i].endTime){
     dataPS[i].detik=Math.max(0, Math.ceil((dataPS[i].endTime-Date.now())/1000))
   }
@@ -1233,49 +904,72 @@ function pause(i){
   save(); render()
 }
 function resetTimer(i){
-  if(!requirePermission('timer','Role ini tidak boleh reset timer.')) return
   if(confirm('Reset timer ' + psList[i].nama + ' ?')){
     const currentJam = dataPS[i].jam
     dataPS[i]={...createDefaultPS(), jam: currentJam}
     save(); render()
   }
 }
-function tambah5menit(i){ if(!requirePermission('timer','Role ini tidak boleh menambah waktu.')) return; dataPS[i].detik += 300; if(dataPS[i].jalan){ dataPS[i].endTime=(dataPS[i].endTime||Date.now())+300000; dataPS[i].selesaiNotif=false } save(); render() }
-function tambah30(i){ if(!requirePermission('timer','Role ini tidak boleh menambah waktu.')) return; dataPS[i].detik += 1800; if(dataPS[i].jalan){ dataPS[i].endTime=(dataPS[i].endTime||Date.now())+1800000; dataPS[i].selesaiNotif=false } save(); render() }
-function tambah1jam(i){ if(!requirePermission('timer','Role ini tidak boleh menambah waktu.')) return; dataPS[i].detik += 3600; if(dataPS[i].jalan){ dataPS[i].endTime=(dataPS[i].endTime||Date.now())+3600000; dataPS[i].selesaiNotif=false } save(); render() }
+function tambah5menit(i){ dataPS[i].detik += 300; if(dataPS[i].jalan){ dataPS[i].endTime=(dataPS[i].endTime||Date.now())+300000; dataPS[i].selesaiNotif=false } save(); render() }
+function tambah30(i){ dataPS[i].detik += 1800; if(dataPS[i].jalan){ dataPS[i].endTime=(dataPS[i].endTime||Date.now())+1800000; dataPS[i].selesaiNotif=false } save(); render() }
+function tambah1jam(i){ dataPS[i].detik += 3600; if(dataPS[i].jalan){ dataPS[i].endTime=(dataPS[i].endTime||Date.now())+3600000; dataPS[i].selesaiNotif=false } save(); render() }
 
 async function bayar(i){
-  if(!requirePermission('timer','Role ini tidak boleh memproses pembayaran.')) return
+  const isPaketMabar = dataPS[i].billingMode === 'paket_mabar'
   const totalMain = hargaMain(i)
   const totalSnack = snackTotal(dataPS[i].snack)
   const total = totalMain + totalSnack
+  const now = new Date()
+
+  const modeBillingSnapshot = isPaketMabar ? 'Paket Mabar' : 'Reguler'
+  const billingSnapshot = isPaketMabar
+    ? `Paket Mabar ${Number(dataPS[i].jam)} Jam`
+    : `${Number(dataPS[i].jam)} Jam`
+
+  const rincianSnapshot = menuRincian(dataPS[i].snack)
 
   pendapatan += total
-
-  const now = new Date()
 
   transaksi.unshift({
     tanggal: now.toLocaleString("id-ID"),
     createdAt: now.toISOString(),
     ps: psList[i].nama,
-    nama: dataPS[i].nama,
-    billing: getBillingLabel(i),
+    nama: dataPS[i].nama || '-',
+    billing: billingSnapshot,
+    modeBilling: modeBillingSnapshot,
     hargaBilling: totalMain,
     totalMenu: totalSnack,
     total
   })
 
-  /* 🔥 kirim ke spreadsheet */
-  const rows = buildSpreadsheetRows(i, totalMain, totalSnack, total)
+  const rows = buildSpreadsheetRows({
+    createdAt: now.toISOString(),
+    tanggalHari: now.toLocaleString("id-ID", {
+      weekday: "long",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit"
+    }),
+    ps: psList[i].nama,
+    tipePS: psList[i].tipe,
+    namaPelanggan: dataPS[i].nama || '-',
+    modeBilling: modeBillingSnapshot,
+    billing: billingSnapshot,
+    hargaBilling: totalMain,
+    totalSnack: totalSnack,
+    totalKeseluruhan: total,
+    rincian: rincianSnapshot
+  })
+
   await kirimTransaksiKeSpreadsheet(rows)
 
   cetakStruk(i, totalMain, totalSnack, total)
 
   dataPS[i] = {
     ...createDefaultPS(),
-    jam: dataPS[i].jam,
-    billingMode: dataPS[i].billingMode,
-    paketDrink: dataPS[i].paketDrink
+    jam: dataPS[i].jam
   }
 
   save()
@@ -1336,53 +1030,6 @@ box-shadow:0 0 0 4px rgba(255,255,255,.05);
 100%{transform:scale(1);opacity:.85}
 }
 
-
-.loginOverlay{
-position:fixed;
-inset:0;
-z-index:400;
-display:grid;
-place-items:center;
-padding:20px;
-background:rgba(4,8,18,.72);
-backdrop-filter:blur(10px);
-}
-.loginOverlay.hidden{display:none}
-.loginCard{
-width:min(100%,560px);
-background:var(--panel-solid);
-border:1px solid var(--line);
-border-radius:28px;
-padding:24px;
-box-shadow:var(--shadow);
-}
-.loginCard h2{margin:0 0 10px;font-size:30px}
-.loginGrid{display:grid;grid-template-columns:1fr;gap:12px}
-.loginGrid input{
-width:100%;
-padding:13px 14px;
-border-radius:14px;
-border:1px solid rgba(255,255,255,.10);
-background:rgba(255,255,255,.06);
-color:var(--text);
-outline:none;
-min-height:48px;
-}
-.roleNotice{
-margin-bottom:18px;
-padding:14px 16px;
-border-radius:18px;
-background:rgba(255,255,255,.05);
-border:1px solid var(--line);
-color:var(--muted);
-}
-.roleNotice strong{color:var(--text)}
-.sectionBlocked{
-opacity:.55;
-pointer-events:none;
-filter:grayscale(.1);
-}
-
 </style>
   </head><body>
   <h3>RENTAL MANTUL PS</h3>
@@ -1403,7 +1050,6 @@ filter:grayscale(.1);
 }
 
 function hapusRiwayat(){
-  if(!requirePermission('destructive','Role ini tidak boleh menghapus riwayat.')) return
   if(confirm('Hapus semua riwayat transaksi?')){
     transaksi=[]
     pendapatan=0
@@ -1411,7 +1057,6 @@ function hapusRiwayat(){
   }
 }
 function hapusTransaksi(index){
-  if(!requirePermission('destructive','Role ini tidak boleh menghapus transaksi.')) return
   if(confirm('Hapus transaksi ini?')){
     const trx=transaksi[index]
     if(trx){ pendapatan -= Number(trx.total||0); if(pendapatan<0) pendapatan=0 }
@@ -1420,7 +1065,6 @@ function hapusTransaksi(index){
   }
 }
 function resetPendapatan(){
-  if(!requirePermission('destructive','Role ini tidak boleh reset pendapatan.')) return
   if(confirm('Reset total pendapatan?')){ pendapatan=0; save(); render() }
 }
 
@@ -1518,7 +1162,6 @@ function getIncomeLast7Days(){
 }
 
 function addExpense(){
-  if(!requirePermission('expense','Role ini tidak boleh menambah pengeluaran.')) return
   const name=document.getElementById('expenseName')?.value?.trim()
   const category=document.getElementById('expenseCategory')?.value || 'Lainnya'
   const amount=Number(document.getElementById('expenseAmount')?.value || 0)
@@ -1528,13 +1171,9 @@ function addExpense(){
   document.getElementById('expenseAmount').value=''
   save(); render()
 }
-function deleteExpense(index){ if(!requirePermission('expense','Role ini tidak boleh menghapus pengeluaran.')) return; if(confirm('Hapus pengeluaran ini?')){ pengeluaran.splice(index,1); save(); render() } }
+function deleteExpense(index){ if(confirm('Hapus pengeluaran ini?')){ pengeluaran.splice(index,1); save(); render() } }
 
 function showSection(section){
-  if(!canAccessSection(section)){
-    alert('Role ini tidak punya akses ke menu ' + section + '.')
-    return
-  }
   document.querySelectorAll('.pageSection').forEach(el=>el.classList.remove('active'))
   document.querySelectorAll('.nav-link').forEach(el=>{
     if(el.id==='compactBtn') return
@@ -1562,8 +1201,6 @@ function toggleCompactMode(){
   const current=localStorage.getItem('compactMode')==='true'
   localStorage.setItem('compactMode', String(!current))
   applyCompactMode()
-  renderAuthUI()
-  applyRolePermissionsUI()
 }
 
 function renderHome(){
@@ -1643,7 +1280,7 @@ function renderRekap(){
   const expHist=document.getElementById('expenseHistory')
   if(expHist){
     expHist.innerHTML=pengeluaran.length ? pengeluaran.slice(0,20).map((e,idx)=>`
-    <tr><td>${e.tanggal}</td><td>${e.kategori}</td><td>${e.nama}</td><td>Rp ${rupiah(e.amount)}</td><td><button data-requires="expense" class="reset" onclick="deleteExpense(${idx})">Hapus</button></td></tr>`).join('') : '<tr><td colspan="5">Belum ada data pengeluaran.</td></tr>'
+    <tr><td>${e.tanggal}</td><td>${e.kategori}</td><td>${e.nama}</td><td>Rp ${rupiah(e.amount)}</td><td><button class="reset" onclick="deleteExpense(${idx})">Hapus</button></td></tr>`).join('') : '<tr><td colspan="5">Belum ada data pengeluaran.</td></tr>'
   }
 }
 
@@ -1660,7 +1297,6 @@ function menuRincian(snack){
 }
 
 function setBillingMode(i, mode){
-  if(!requirePermission('timer','Role ini tidak boleh mengubah mode billing.')) return
   dataPS[i].billingMode=mode
   if(mode==='paket_mabar'){
     dataPS[i].jam=3
@@ -1671,13 +1307,11 @@ function setBillingMode(i, mode){
   save(); render()
 }
 function setPaketDrink(i, drink){
-  if(!requirePermission('timer','Role ini tidak boleh mengubah paket.')) return
   dataPS[i].paketDrink=drink
   save(); render()
 }
 
 function tambahMenu(ps){
-  if(!requirePermission('timer','Role ini tidak boleh menambah menu.')) return
   let select=document.getElementById('menuSelect'+ps)
   let qtyInput=document.getElementById('menuQtyInput'+ps)
   if(!select) return
@@ -1767,13 +1401,13 @@ function render(){
     html += `
     <div class="pscard ${getStatusClass(p)}">
       <div class="psname">${ps.nama} (${ps.tipe}) ${getBadge(p)}</div>
-      <input data-requires="timer" placeholder="Nama pemain" value="${p.nama}" oninput="dataPS[${i}].nama=this.value;save()">
-      <select data-requires="timer" onchange="setBillingMode(${i}, this.value)">
+      <input placeholder="Nama pemain" value="${p.nama}" oninput="dataPS[${i}].nama=this.value;save()">
+      <select onchange="setBillingMode(${i}, this.value)">
         <option value="reguler" ${p.billingMode==='reguler'?'selected':''}>Reguler</option>
         <option value="paket_mabar" ${p.billingMode==='paket_mabar'?'selected':''}>Paket Mabar 3 Jam</option>
       </select>
       ${p.billingMode==='reguler' ? `
-      <select data-requires="timer" onchange="dataPS[${i}].jam=Number(this.value); if(!dataPS[${i}].jalan){ dataPS[${i}].detik=0; } save(); render();">
+      <select onchange="dataPS[${i}].jam=Number(this.value); if(!dataPS[${i}].jalan){ dataPS[${i}].detik=0; } save(); render();">
         <option value="1" ${Number(p.jam)==1?'selected':''}>1 Jam</option>
         <option value="2" ${Number(p.jam)==2?'selected':''}>2 Jam</option>
         <option value="3" ${Number(p.jam)==3?'selected':''}>3 Jam</option>
@@ -1784,7 +1418,7 @@ function render(){
         <option value="24" ${Number(p.jam)==24?'selected':''}>24 Jam</option>
       </select>` : `
       <div class="menuEmpty">${paketMabar[ps.tipe].label} • Rp ${rupiah(paketMabar[ps.tipe].harga)}</div>
-      <select data-requires="timer" onchange="setPaketDrink(${i}, this.value)">
+      <select onchange="setPaketDrink(${i}, this.value)">
         <option value="Kopi Liong" ${(p.paketDrink||'Kopi Liong')==='Kopi Liong'?'selected':''}>Bonus minum: Kopi Liong</option>
         <option value="Nutrisari" ${(p.paketDrink||'Kopi Liong')==='Nutrisari'?'selected':''}>Bonus minum: Es Nutrisari</option>
       </select>`}
@@ -1794,12 +1428,12 @@ function render(){
       <div class="menuSection">
         <div class="menuTitle">Pilih Menu</div>
         <div class="menuDropdownRow">
-          <select data-requires="timer" id="menuSelect${i}" class="menuDropdownSelect">
+          <select id="menuSelect${i}" class="menuDropdownSelect">
             <option value="">Pilih menu...</option>
             ${menu.map((m,idx)=>`<option value="${idx}">${m.nama} • ${m.kategori} • Rp ${rupiah(m.harga)}</option>`).join('')}
           </select>
-          <input data-requires="timer" id="menuQtyInput${i}" class="menuQtyInput" type="number" min="1" value="1">
-          <button data-requires="timer" class="add" onclick="tambahMenu(${i})">Tambah</button>
+          <input id="menuQtyInput${i}" class="menuQtyInput" type="number" min="1" value="1">
+          <button class="add" onclick="tambahMenu(${i})">Tambah</button>
         </div>
         ${includedHTML}
         <div class="menuList">${snackHTML}</div>
@@ -1810,20 +1444,18 @@ function render(){
         </div>
       </div>
       <div class="controls" style="margin-top:18px;">
-        <button data-requires="timer" class="start" onclick="start(${i})">Start</button>
-        <button data-requires="timer" class="pause" onclick="pause(${i})">Pause</button>
-        <button data-requires="timer" class="add" onclick="tambah5menit(${i})">+5m</button>
-        <button data-requires="timer" class="add" onclick="tambah30(${i})">+30m</button>
-        <button data-requires="timer" class="add" onclick="tambah1jam(${i})">+1h</button>
-        <button data-requires="timer" class="reset" onclick="resetTimer(${i})">Reset</button>
-        <button data-requires="timer" class="start" onclick="bayar(${i})">Bayar</button>
+        <button class="start" onclick="start(${i})">Start</button>
+        <button class="pause" onclick="pause(${i})">Pause</button>
+        <button class="add" onclick="tambah5menit(${i})">+5m</button>
+        <button class="add" onclick="tambah30(${i})">+30m</button>
+        <button class="add" onclick="tambah1jam(${i})">+1h</button>
+        <button class="reset" onclick="resetTimer(${i})">Reset</button>
+        <button class="start" onclick="bayar(${i})">Bayar</button>
       </div>
     </div>`
   })
 
-  const currentUser = getCurrentUser()
-  const roleNotice = currentUser ? `<div class="roleNotice"><strong>${currentUser.displayName}</strong> masuk sebagai <strong>${currentUser.role.toUpperCase()}</strong>. ${currentUser.role==='admin' ? 'Akses penuh ke seluruh fitur.' : currentUser.role==='operator' ? 'Bisa mengelola timer, menu, dan pembayaran.' : 'Fokus memantau dashboard, rekap, dan riwayat.'}</div>` : ''
-  document.getElementById('psContainer').innerHTML= roleNotice + `<div class="grid">${html}</div>`
+  document.getElementById('psContainer').innerHTML=`<div class="grid">${html}</div>`
   renderSummary()
   renderHistory()
   renderHome()
@@ -1831,14 +1463,12 @@ function render(){
   const totalPendEl=document.getElementById('totalPend')
   if(totalPendEl) totalPendEl.innerText='Rp ' + rupiah(pendapatan)
   applyCompactMode()
-  renderAuthUI()
-  applyRolePermissionsUI()
 }
 
 function renderHistory(){
   let html=''
   transaksi.forEach((t,index)=>{
-    html += `<tr><td>${t.tanggal}<br><small>${t.billing || '-'}</small></td><td>${t.ps}</td><td>${t.nama || '-'}</td><td>Rp ${rupiah(t.total)}</td><td><button data-requires="destructive" class="reset" onclick="hapusTransaksi(${index})">Hapus</button></td></tr>`
+    html += `<tr><td>${t.tanggal}<br><small>${t.billing || '-'}</small></td><td>${t.ps}</td><td>${t.nama || '-'}</td><td>Rp ${rupiah(t.total)}</td><td><button class="reset" onclick="hapusTransaksi(${index})">Hapus</button></td></tr>`
   })
   let history=document.getElementById('history')
   if(history) history.innerHTML = html || '<tr><td colspan="5">Belum ada transaksi.</td></tr>'
@@ -1894,22 +1524,13 @@ registerServiceWorker()
 setupInstallPrompt()
 applyCompactMode()
 renderBackupStatus()
-renderAuthUI()
 if(!SHEET_WEBAPP_URL || SHEET_WEBAPP_URL.includes("PASTE_URL")){
   setBackupStatus('warning','Backup belum aktif','Masukkan URL Web App Google Sheets untuk menyalakan auto backup.', {visible:true})
 }
 recalcRunningTimers(true)
 setInterval(tick,1000)
 render()
-applyRolePermissionsUI()
-const defaultSection = canAccessSection('home') ? 'home' : (canAccessSection('timer') ? 'timer' : 'rekap')
-if(defaultSection){ showSection(defaultSection) }
-
-document.getElementById('loginPassword')?.addEventListener('keydown', (e)=>{ if(e.key==='Enter') login() })
-document.getElementById('loginUsername')?.addEventListener('keydown', (e)=>{ if(e.key==='Enter') login() })
-document.getElementById('registerPassword')?.addEventListener('keydown', (e)=>{ if(e.key==='Enter') registerUser() })
-document.getElementById('registerUsername')?.addEventListener('keydown', (e)=>{ if(e.key==='Enter') registerUser() })
-document.getElementById('registerDisplayName')?.addEventListener('keydown', (e)=>{ if(e.key==='Enter') registerUser() })
+showSection('home')
 </script>
 </body>
 </html>
