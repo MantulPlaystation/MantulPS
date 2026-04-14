@@ -44,6 +44,10 @@ min-height:100%;
 }
 body{padding:110px 18px 42px}
 
+.logo img {
+  box-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+  
 .navbar{
 position:fixed;
 top:18px;
@@ -57,9 +61,9 @@ gap:16px;
 padding:14px 18px;
 border:1px solid var(--line);
 border-radius:22px;
-background: linear-gradient(90deg, #1a73e8, #7c9cff);
+background:rgba(8,12,24,.78);
 backdrop-filter:blur(18px);
-box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+box-shadow:var(--shadow);
 }
 .nav-brand{display:flex;align-items:center;gap:12px;min-width:240px}
 .brand-mark{
@@ -359,12 +363,9 @@ box-shadow:0 0 0 4px rgba(255,255,255,.05);
 </head>
 <body>
 <nav class="navbar">
-  <nav class="navbar" style="display:flex;align-items:center;justify-content:space-between">
-
-  <div style="display:flex;align-items:center;gap:10px">
-    <img src="https://drive.google.com/file/d/1fY-urhWlhc9Xx1zJZZpd08BqMDDof3Aj/view?usp=sharing" style="height:40px;border-radius:8px">
-    <strong>Aplikasi Rental PS</strong>
-  </div>
+  <div class="logo">
+  <img src="https://drive.google.com/file/d/1fY-urhWlhc9Xx1zJZZpd08BqMDDof3Aj/view?usp=drive_link" style="height:40px;width:40px;border-radius:12px">
+</div>
 
   <!-- bagian kanan navbar (kalau ada) tetap di sini -->
 
