@@ -752,6 +752,40 @@ function rupiah(n){
   return new Intl.NumberFormat('id-ID').format(Number(n||0)) 
 }
 
+async function kirimPengeluaranKeSpreadsheet(payloadRows){
+  if(!SHEET_WEBAPP_URL || SHEET_WEBAPP_URL.includes("PASTE_URL")){
+    throw new Error("URL Google Sheets belum diisi")
+  }
+
+  const formData = new FormData()
+  formData.append("type", "expense")
+  formData.append("rows", JSON.stringify(payloadRows || []))
+
+  const response = await fetch(SHEET_WEBAPP_URL, {
+    method: "POST",
+    body: formData
+  })
+
+  if(!response.ok){
+    throw new Error("HTTP " + response.status)
+  }
+
+  const rawText = await response.text()
+  let result = null
+
+  try{
+    result = rawText ? JSON.parse(rawText) : null
+  }catch(e){
+    result = { raw: rawText }
+  }
+
+  if(result && result.success === false){
+    throw new Error(result.error || result.message || "Apps Script mengembalikan status gagal")
+  }
+
+  return { ok:true, result }
+}
+
 async function kirimTransaksiKeSpreadsheet(payloadRows){
   if(!SHEET_WEBAPP_URL || SHEET_WEBAPP_URL.includes("PASTE_URL")){
     setBackupStatus('warning','Backup belum aktif','Isi URL Web App Google Sheets dulu agar transaksi bisa tersimpan otomatis.', {visible:true})
@@ -1161,16 +1195,51 @@ function getIncomeLast7Days(){
   return arr
 }
 
-function addExpense(){
-  const name=document.getElementById('expenseName')?.value?.trim()
-  const category=document.getElementById('expenseCategory')?.value || 'Lainnya'
-  const amount=Number(document.getElementById('expenseAmount')?.value || 0)
-  if(!name || amount<=0){ alert('Isi nama dan nominal pengeluaran dulu.'); return }
-  pengeluaran.unshift({nama:name,kategori:category,amount,tanggal:new Date().toLocaleString('id-ID'),createdAt:new Date().toISOString()})
-  document.getElementById('expenseName').value=''
-  document.getElementById('expenseAmount').value=''
-  save(); render()
+function buildExpenseRows(expense){
+  return [{
+    createdAt: expense.createdAt || new Date().toISOString(),
+    tanggal: expense.tanggal || new Date().toLocaleString("id-ID"),
+    kategori: expense.kategori || "Lainnya",
+    nama: expense.nama || "-",
+    nominal: Number(expense.amount || 0)
+  }]
 }
+  
+async function addExpense(){
+  const name = document.getElementById('expenseName')?.value?.trim()
+  const category = document.getElementById('expenseCategory')?.value || 'Lainnya'
+  const amount = Number(document.getElementById('expenseAmount')?.value || 0)
+
+  if(!name || amount <= 0){
+    alert('Isi nama dan nominal pengeluaran dulu.')
+    return
+  }
+
+  const expense = {
+    nama: name,
+    kategori: category,
+    amount: amount,
+    tanggal: new Date().toLocaleString('id-ID'),
+    createdAt: new Date().toISOString()
+  }
+
+  pengeluaran.unshift(expense)
+  save()
+  render()
+
+  try{
+    const rows = buildExpenseRows(expense)
+    await kirimPengeluaranKeSpreadsheet(rows)
+    alert('Pengeluaran berhasil disimpan dan dikirim ke sheet Pengeluaran.')
+  }catch(error){
+    console.error('Gagal kirim pengeluaran ke spreadsheet:', error)
+    alert('Pengeluaran tersimpan di aplikasi, tapi gagal dikirim ke sheet Pengeluaran.')
+  }
+
+  document.getElementById('expenseName').value = ''
+  document.getElementById('expenseAmount').value = ''
+}
+  
 function deleteExpense(index){ if(confirm('Hapus pengeluaran ini?')){ pengeluaran.splice(index,1); save(); render() } }
 
 function showSection(section){
