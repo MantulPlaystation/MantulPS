@@ -120,7 +120,7 @@ border-radius:24px;padding:20px;box-shadow:var(--shadow)
 .simpleRow small{color:var(--muted);display:block;margin-top:4px}
 .tableWrap{overflow:auto}
 
-.expenseForm{display:grid;grid-template-columns:1.2fr 1fr 1fr auto;gap:12px}
+.expenseForm{display:grid;grid-template-columns:1.2fr 1fr 1fr .8fr 1fr auto;gap:12px}
 .expenseForm input,.expenseForm select,.pscard input,.pscard select,.menuDropdownSelect,.menuQtyInput{
 width:100%;
 padding:12px 14px;
@@ -133,6 +133,11 @@ display:block;
 min-height:46px;
 appearance:auto;
 -webkit-appearance:menulist;
+}
+#expenseTotalPreview{
+background:rgba(255,255,255,.04);
+color:var(--text);
+font-weight:700;
 }
 
 .menuDropdownSelect{
@@ -366,8 +371,8 @@ box-shadow:0 0 0 4px rgba(255,255,255,.05);
 <nav class="navbar">
   <div class="nav-brand">
     <div class="logo">
-  <img src="https://raw.githubusercontent.com/MantulPlaystation/logo.png/main/logo.png.png" 
-       style="width:50px;height:50px;object-fit:cover;border-radius:12px"
+      <img src="https://raw.githubusercontent.com/MantulPlaystation/logo.png/main/logo.png.png" style="width:50px;height:50px;object-fit:cover;border-radius:12px" alt="Logo Mantul PS">
+    </div>
     <div>
       <div class="brand-title">Rental PS Manager</div>
       <div class="brand-subtitle">Billing, timer, dan rekap usaha</div>
@@ -385,7 +390,6 @@ box-shadow:0 0 0 4px rgba(255,255,255,.05);
     <button id="installBtn" class="add installBtn" style="display:none;">Install App</button>
   </div>
 </nav>
-
 
 <div id="backupStatus" class="backupStatus hidden status-idle" aria-live="polite">
   <div class="backupStatusIcon"></div>
@@ -526,7 +530,9 @@ box-shadow:0 0 0 4px rgba(255,255,255,.05);
             <option value="Perawatan">Perawatan</option>
             <option value="Lainnya">Lainnya</option>
           </select>
-          <input id="expenseAmount" type="number" min="0" placeholder="Nominal pengeluaran">
+          <input id="expenseAmount" type="number" min="0" placeholder="Harga satuan" oninput="updateExpenseTotalPreview()">
+          <input id="expenseQty" type="number" min="1" value="1" placeholder="Qty" oninput="updateExpenseTotalPreview()">
+          <input id="expenseTotalPreview" type="text" placeholder="Total otomatis" readonly>
           <button class="add" onclick="addExpense()">Simpan Pengeluaran</button>
         </div>
       </div>
@@ -579,6 +585,8 @@ box-shadow:0 0 0 4px rgba(255,255,255,.05);
                 <th>Tanggal</th>
                 <th>Kategori</th>
                 <th>Nama</th>
+                <th>Qty</th>
+                <th>Harga Satuan</th>
                 <th>Nominal</th>
                 <th>Aksi</th>
               </tr>
@@ -1030,48 +1038,7 @@ function cetakStruk(i,main,snack,total){
   let w=window.open('','','width=380')
   w.document.write(`
   <html><head><title>Struk Rental PS</title>
-  <style>body{font-family:Arial,sans-serif;padding:16px;color:#111}h3{margin:0 0 10px}table{width:100%;border-collapse:collapse;margin-top:10px}td,th{padding:7px 4px;border-bottom:1px solid #ddd;text-align:left;font-size:13px;vertical-align:top}.total{font-weight:700}
-.backupStatus{
-position:fixed;
-right:18px;
-bottom:18px;
-z-index:120;
-max-width:min(420px, calc(100vw - 24px));
-padding:12px 14px;
-border-radius:16px;
-border:1px solid var(--line);
-background:rgba(8,12,24,.92);
-backdrop-filter:blur(16px);
-box-shadow:var(--shadow);
-display:flex;
-align-items:flex-start;
-gap:10px;
-}
-.backupStatus.hidden{display:none}
-.backupStatusIcon{
-width:12px;
-height:12px;
-border-radius:999px;
-margin-top:4px;
-flex:0 0 12px;
-background:var(--muted);
-box-shadow:0 0 0 4px rgba(255,255,255,.05);
-}
-.backupStatusContent{min-width:0}
-.backupStatusTitle{font-size:13px;font-weight:800;color:var(--text);margin-bottom:4px}
-.backupStatusText{font-size:12px;color:var(--muted);line-height:1.45}
-.backupStatus.status-idle .backupStatusIcon{background:var(--muted)}
-.backupStatus.status-sending .backupStatusIcon{background:var(--warning);animation:pulseBackup 1.2s ease-in-out infinite}
-.backupStatus.status-success .backupStatusIcon{background:var(--success)}
-.backupStatus.status-error .backupStatusIcon{background:var(--danger)}
-.backupStatus.status-warning .backupStatusIcon{background:var(--warning)}
-@keyframes pulseBackup{
-0%{transform:scale(1);opacity:.85}
-50%{transform:scale(1.18);opacity:1}
-100%{transform:scale(1);opacity:.85}
-}
-
-</style>
+  <style>body{font-family:Arial,sans-serif;padding:16px;color:#111}h3{margin:0 0 10px}table{width:100%;border-collapse:collapse;margin-top:10px}td,th{padding:7px 4px;border-bottom:1px solid #ddd;text-align:left;font-size:13px;vertical-align:top}.total{font-weight:700}</style>
   </head><body>
   <h3>RENTAL MANTUL PS</h3>
   <div>${new Date().toLocaleString('id-ID')}</div><hr>
@@ -1149,28 +1116,7 @@ function getIncomeSummary(){
   }).reduce((a,b)=>a+Number(b.total||0),0)
 
   return {daily, monthly, yearly}
-
-  const incomeDaily = transaksi
-    .filter(t => formatDateKey(normalizeTransDate(t)) === todayKey)
-    .reduce((sum, t) => sum + Number(t.total || 0), 0)
-
-  const incomeMonthly = transaksi
-    .filter(t => formatMonthKey(normalizeTransDate(t)) === monthKey)
-    .reduce((sum, t) => sum + Number(t.total || 0), 0)
-
-  const incomeYearly = transaksi
-    .filter(t => formatYearKey(normalizeTransDate(t)) === yearKey)
-    .reduce((sum, t) => sum + Number(t.total || 0), 0)
-
-  return {
-    daily: incomeDaily,
-    monthly: incomeMonthly,
-    yearly: incomeYearly
-  }
 }
-
-function formatMonthKey(date){ const d=new Date(date); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0') }
-function normalizeTransDate(item){ return item.createdAt ? new Date(item.createdAt) : new Date(item.tanggal) }
 
 function getPeriodTotals(){
   const now=new Date()
@@ -1202,12 +1148,24 @@ function getIncomeLast7Days(){
   return arr
 }
 
+function updateExpenseTotalPreview(){
+  const amount = Number(document.getElementById('expenseAmount')?.value || 0)
+  const qty = Math.max(1, Number(document.getElementById('expenseQty')?.value || 1))
+  const total = amount * qty
+  const preview = document.getElementById('expenseTotalPreview')
+  if(preview){
+    preview.value = total > 0 ? 'Rp ' + rupiah(total) : ''
+  }
+}
+
 function buildExpenseRows(expense){
   return [{
     createdAt: expense.createdAt || new Date().toISOString(),
     tanggal: expense.tanggal || new Date().toLocaleString("id-ID"),
     kategori: expense.kategori || "Lainnya",
     nama: expense.nama || "-",
+    hargaSatuan: Number(expense.hargaSatuan || 0),
+    qty: Number(expense.qty || 1),
     nominal: Number(expense.amount || 0)
   }]
 }
@@ -1215,17 +1173,21 @@ function buildExpenseRows(expense){
 async function addExpense(){
   const name = document.getElementById('expenseName')?.value?.trim()
   const category = document.getElementById('expenseCategory')?.value || 'Lainnya'
-  const amount = Number(document.getElementById('expenseAmount')?.value || 0)
+  const hargaSatuan = Number(document.getElementById('expenseAmount')?.value || 0)
+  const qty = Math.max(1, Number(document.getElementById('expenseQty')?.value || 1))
+  const total = hargaSatuan * qty
 
-  if(!name || amount <= 0){
-    alert('Isi nama dan nominal pengeluaran dulu.')
+  if(!name || hargaSatuan <= 0 || qty <= 0){
+    alert('Isi nama, harga satuan, dan qty dulu.')
     return
   }
 
   const expense = {
     nama: name,
     kategori: category,
-    amount: amount,
+    hargaSatuan: hargaSatuan,
+    qty: qty,
+    amount: total,
     tanggal: new Date().toLocaleString('id-ID'),
     createdAt: new Date().toISOString()
   }
@@ -1245,6 +1207,8 @@ async function addExpense(){
 
   document.getElementById('expenseName').value = ''
   document.getElementById('expenseAmount').value = ''
+  document.getElementById('expenseQty').value = '1'
+  document.getElementById('expenseTotalPreview').value = ''
 }
   
 function deleteExpense(index){ if(confirm('Hapus pengeluaran ini?')){ pengeluaran.splice(index,1); save(); render() } }
@@ -1355,8 +1319,17 @@ function renderRekap(){
   }
   const expHist=document.getElementById('expenseHistory')
   if(expHist){
-    expHist.innerHTML=pengeluaran.length ? pengeluaran.slice(0,20).map((e,idx)=>`
-    <tr><td>${e.tanggal}</td><td>${e.kategori}</td><td>${e.nama}</td><td>Rp ${rupiah(e.amount)}</td><td><button class="reset" onclick="deleteExpense(${idx})">Hapus</button></td></tr>`).join('') : '<tr><td colspan="5">Belum ada data pengeluaran.</td></tr>'
+    expHist.innerHTML = pengeluaran.length ? pengeluaran.slice(0,20).map((e,idx)=>`
+      <tr>
+        <td>${e.tanggal}</td>
+        <td>${e.kategori}</td>
+        <td>${e.nama}</td>
+        <td>${e.qty || 1}</td>
+        <td>Rp ${rupiah(e.hargaSatuan || e.amount || 0)}</td>
+        <td>Rp ${rupiah(e.amount)}</td>
+        <td><button class="reset" onclick="deleteExpense(${idx})">Hapus</button></td>
+      </tr>
+    `).join('') : '<tr><td colspan="7">Belum ada data pengeluaran.</td></tr>'
   }
 }
 
@@ -1539,6 +1512,7 @@ function render(){
   const totalPendEl=document.getElementById('totalPend')
   if(totalPendEl) totalPendEl.innerText='Rp ' + rupiah(pendapatan)
   applyCompactMode()
+  updateExpenseTotalPreview()
 }
 
 function renderHistory(){
